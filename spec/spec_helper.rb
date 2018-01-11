@@ -1,5 +1,7 @@
 require "bundler/setup"
-require "santa_maria/product_importer"
+require "santa_maria/use_case/fetch_products"
+require "santa_maria/gateway/santa_maria_v2"
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
