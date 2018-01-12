@@ -11,12 +11,17 @@ module SantaMaria
         def variants
           response = Net::HTTP.get_response(URI("https://api/api/v2/products/#{global_id}"))
 
-          variants = JSON.parse(response.body)
+          product = JSON.parse(response.body)
 
-          variant = Variant.new
-          variant.article_number = variants['sku'][0]['articleNumber']
+          variants = []
 
-          [variant]
+          if product['sku'].length > 0
+            variant = Variant.new
+            variant.article_number = product['sku'][0]['articleNumber']
+            variants << variant
+          end
+
+          variants
         end
       end
 

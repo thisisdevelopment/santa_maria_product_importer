@@ -16,6 +16,10 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
   end
 
   before do
+    response = {
+      products: products.map { |product| product[:basic] }
+    }
+
     stub_request(:get, "https://api/api/v2/products").to_return(
       body: response.to_json,
       status: 200
@@ -23,11 +27,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
   end
 
   context 'given no products' do
-    let(:response) do
-      {
-        products: []
-      }
-    end
+    let(:products) { [] }
 
     it 'yields no products' do
       expect { |block| gateway.all_products(&block) }.not_to yield_control
@@ -36,22 +36,10 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
 
   context 'given a product with an id' do
     shared_examples 'santa maria gateway' do
-      let(:response) do
-        {
-          products: [{
-                       globalId: global_id
-                     }]
-        }
-      end
-
       let!(:stub_product_get) do
-        product = {
-          sku: [
-            {
-              articleNumber: article_number
-            }
-          ]
-        }
+        product = products[0]
+        global_id = product[:basic][:globalId]
+        product = product[:basic].merge(product[:extended])
 
         stub_request(:get, "https://api/api/v2/products/#{global_id}").to_return(
           body: product.to_json,
@@ -61,6 +49,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
 
       context 'when reading all products' do
         it 'yields a product with an id' do
+          global_id = expected_products[0][:global_id]
           expect { |block| gateway.all_products(&block) }.to(
             yield_with_args(a_product_with_id(global_id))
           )
@@ -78,24 +67,107 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
           expect(stub_product_get).to have_been_requested
         end
 
-        it 'should yield a product with a variant' do
-          expect { |block| gateway.all_products(&block) }.to(
-            yield_with_args(a_product_with_variant(article_number: article_number))
-          )
+        it 'should yield a product with the correct variants' do
+          expected_products[0][:variants].each do |variant|
+            article_number = variant[:article_number]
+            expect { |block| gateway.all_products(&block) }.to(
+              yield_with_args(a_product_with_variant(article_number: article_number))
+            )
+          end
         end
       end
     end
 
     context do
-      let(:global_id) { '19281811918' }
-      let(:article_number) { '1923810' }
+      let(:products) do
+        [
+          {
+            basic: {
+              globalId: '19281811918'
+            },
+            extended: {
+              sku: [
+                {
+                  articleNumber: '1923810'
+                }
+              ]
+            }
+          }
+        ]
+      end
+
+      let(:expected_products) do
+        [
+          {
+            global_id: '19281811918',
+            variants: [
+              {
+                article_number: '1923810'
+              }
+            ]
+          }
+        ]
+      end
 
       it_behaves_like 'santa maria gateway'
     end
 
     context do
-      let(:global_id) { '912817261' }
-      let(:article_number) { '5819281' }
+      let(:products) do
+        [
+          {
+            basic: {
+              globalId: '912817261'
+            },
+            extended: {
+              sku: [
+                {
+                  articleNumber: '5819281'
+                }
+              ]
+            }
+          }
+        ]
+      end
+
+      let(:expected_products) do
+        [
+          {
+            global_id: '912817261',
+            variants: [
+              {
+                article_number: '5819281'
+              }
+            ]
+          }
+        ]
+      end
+
+      it_behaves_like 'santa maria gateway'
+    end
+
+    context do
+      let(:products) do
+        [
+          {
+            basic: {
+              globalId: '912817261'
+            },
+            extended: {
+              sku: []
+            }
+          }
+        ]
+      end
+
+      let(:expected_products) do
+        [
+          {
+            global_id: '912817261',
+            variants: []
+          }
+        ]
+      end
 
       it_behaves_like 'santa maria gateway'
     end
