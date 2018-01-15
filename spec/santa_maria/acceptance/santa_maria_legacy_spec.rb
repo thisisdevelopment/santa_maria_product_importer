@@ -1,4 +1,4 @@
-RSpec.describe 'santa maria v2' do
+RSpec.describe 'santa maria legacy' do
   class SpyPresenter
     attr_reader :products, :variants
 
@@ -18,13 +18,13 @@ RSpec.describe 'santa maria v2' do
 
   context do
     before do
-      stub_request(:get, "https://api/api/v2/products/fb1c568f-2c42-4b7d-8cac-a18500de96e8")
+      stub_request(:get, "https://api/api/products/eukdlx/fb1c568f-2c42-4b7d-8cac-a18500de96e8")
         .to_return(
-          body: { sku: [] }.to_json,
+          body: { packages: [] }.to_json,
           status: 200
         )
 
-      stub_request(:get, "https://api/api/v2/products")
+      stub_request(:get, "https://api/api/products/eukdlx")
         .to_return(
           body: response.to_json,
           status: 200
@@ -42,7 +42,7 @@ RSpec.describe 'santa maria v2' do
 
       it 'it able to extract those products' do
         use_case = SantaMaria::UseCase::FetchProducts.new(
-          santa_maria: SantaMaria::Gateway::SantaMariaV2.new('https://api/')
+          santa_maria: SantaMaria::Gateway::SantaMariaLegacy.new('https://api/')
         )
 
         spy_presenter = SpyPresenter.new
@@ -55,9 +55,9 @@ RSpec.describe 'santa maria v2' do
 
     context 'given one product with a variant' do
       before do
-        stub_request(:get, "https://api/api/v2/products/192871-19291-39192-109283")
+        stub_request(:get, "https://api/api/products/eukdlx/192871-19291-39192-109283")
           .to_return(
-            body: { sku: [{ articleNumber: '1111111' }] }.to_json,
+            body: { packages: [{ articleNumber: '1111111' }] }.to_json,
             status: 200
           )
       end
@@ -72,7 +72,7 @@ RSpec.describe 'santa maria v2' do
 
       it 'it able to extract those products' do
         use_case = SantaMaria::UseCase::FetchProducts.new(
-          santa_maria: SantaMaria::Gateway::SantaMariaV2.new('https://api/')
+          santa_maria: SantaMaria::Gateway::SantaMariaLegacy.new('http://api/')
         )
 
         spy_presenter = SpyPresenter.new
@@ -85,15 +85,15 @@ RSpec.describe 'santa maria v2' do
 
     context 'given two products with a variant' do
       before do
-        stub_request(:get, "https://api/api/v2/products/192871-19291-39192-109283")
+        stub_request(:get, "https://api/api/products/eukdlx/192871-19291-39192-109283")
           .to_return(
-            body: { sku: [{ articleNumber: '1111111' }] }.to_json,
+            body: { packages: [{ articleNumber: '1111111' }] }.to_json,
             status: 200
           )
 
-        stub_request(:get, "https://api/api/v2/products/192871-19291-39192-982910")
+        stub_request(:get, "https://api/api/products/eukdlx/192871-19291-39192-982910")
           .to_return(
-            body: { sku: [{ articleNumber: '2222222' }, {articleNumber: '3333333'}] }.to_json,
+            body: { packages: [{ articleNumber: '2222222' }, { articleNumber: '3333333' }] }.to_json,
             status: 200
           )
       end
@@ -111,7 +111,7 @@ RSpec.describe 'santa maria v2' do
 
       it 'is able to extract those products' do
         use_case = SantaMaria::UseCase::FetchProducts.new(
-          santa_maria: SantaMaria::Gateway::SantaMariaV2.new('http://api/')
+          santa_maria: SantaMaria::Gateway::SantaMariaLegacy.new('https://api/')
         )
 
         spy_presenter = SpyPresenter.new
