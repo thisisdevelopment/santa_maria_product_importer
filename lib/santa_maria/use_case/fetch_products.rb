@@ -8,13 +8,18 @@ module SantaMaria
       def execute(presenter)
         products = []
         santa_maria.all_products do |product|
-          presenter.product({ id: product.global_id })
+          presenter.product(
+            id: product.global_id
+          )
           products << product
         end
 
         products.each do |product|
           product.variants.each do |variant|
-            presenter.variant({ article_number: variant.article_number })
+            presenter.variant(
+              id: product.global_id,
+              article_number: variant.article_number
+            )
           end
         end
 

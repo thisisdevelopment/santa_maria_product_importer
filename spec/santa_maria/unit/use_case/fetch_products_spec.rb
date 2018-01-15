@@ -73,7 +73,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
       it 'presents the variant' do
         subject.execute(presenter)
         expect(presenter).to(
-          have_received(:variant).with({ article_number: expected_article_number })
+          have_received(:variant).with({ id: '2', article_number: expected_article_number })
         )
       end
     end
@@ -136,16 +136,16 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         )
 
         expect(presenter).to(
-          have_received(:variant).with({ article_number: '581239'}).ordered
+          have_received(:variant).with({ id: '2', article_number: '581239'}).ordered
         )
         expect(presenter).to(
-          have_received(:variant).with({ article_number: '182356' }).ordered
+          have_received(:variant).with({ id: '2', article_number: '182356' }).ordered
         )
         expect(presenter).to(
-          have_received(:variant).with({ article_number: '192817' }).ordered
+          have_received(:variant).with({ id: '3', article_number: '192817' }).ordered
         )
         expect(presenter).to(
-          have_received(:variant).with({ article_number: '192811' }).ordered
+          have_received(:variant).with({ id: '3', article_number: '192811' }).ordered
         )
       end
     end

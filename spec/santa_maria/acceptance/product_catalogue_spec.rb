@@ -119,8 +119,14 @@ RSpec.describe 'product catalogue' do
 
         expect(spy_presenter.products[0][:id]).to eq('192871-19291-39192-109283')
         expect(spy_presenter.products[1][:id]).to eq('192871-19291-39192-982910')
+
+        expect(spy_presenter.variants[0][:id]).to eq('192871-19291-39192-109283')
         expect(spy_presenter.variants[0][:article_number]).to eq('1111111')
+
+        expect(spy_presenter.variants[1][:id]).to eq('192871-19291-39192-982910')
         expect(spy_presenter.variants[1][:article_number]).to eq('2222222')
+
+        expect(spy_presenter.variants[2][:id]).to eq('192871-19291-39192-982910')
         expect(spy_presenter.variants[2][:article_number]).to eq('3333333')
       end
     end
