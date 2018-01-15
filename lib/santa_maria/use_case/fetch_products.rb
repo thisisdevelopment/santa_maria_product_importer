@@ -11,7 +11,8 @@ module SantaMaria
           presenter.product(
             id: product.global_id,
             type: product.type,
-            name: product.name
+            name: product.name,
+            uri_name: product.uri_name
           )
           products << product
         end

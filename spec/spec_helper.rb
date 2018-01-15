@@ -20,7 +20,8 @@ RSpec::Matchers.define :a_product do |expected_product|
   match do |product|
     expected_product[:global_id] == product.global_id &&
       expected_product[:type] == product.type &&
-      expected_product[:name] == product.name
+      expected_product[:name] == product.name &&
+      expected_product[:uri_name] == product.uri_name
   end
 end
 

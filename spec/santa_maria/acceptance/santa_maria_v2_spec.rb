@@ -35,7 +35,7 @@ RSpec.describe 'santa maria v2' do
 
         stub_request(:get, "https://api/api/v2/products/192871-19291-39192-982910")
           .to_return(
-            body: { sku: [{ articleNumber: '2222222' }, {articleNumber: '3333333'}] }.to_json,
+            body: { sku: [{ articleNumber: '2222222' }, { articleNumber: '3333333' }] }.to_json,
             status: 200
           )
       end
@@ -45,12 +45,14 @@ RSpec.describe 'santa maria v2' do
           products: [{
                        globalId: '192871-19291-39192-109283',
                        productType: 'Paint',
-                       name: 'Easycare'
+                       name: 'Easycare',
+                       uri: 'easy-care'
                      },
                      {
                        globalId: '192871-19291-39192-982910',
                        productType: 'Paint',
-                       name: 'Paint Mixing Easycare'
+                       name: 'Paint Mixing Easycare',
+                       uri: 'paint-mixing-easy-care'
                      }]
         }
       end
@@ -66,10 +68,12 @@ RSpec.describe 'santa maria v2' do
         expect(spy_presenter.products[0][:id]).to eq('192871-19291-39192-109283')
         expect(spy_presenter.products[0][:type]).to eq('Paint')
         expect(spy_presenter.products[0][:name]).to eq('Easycare')
+        expect(spy_presenter.products[0][:uri_name]).to eq('easy-care')
 
         expect(spy_presenter.products[1][:id]).to eq('192871-19291-39192-982910')
         expect(spy_presenter.products[1][:type]).to eq('Paint')
         expect(spy_presenter.products[1][:name]).to eq('Paint Mixing Easycare')
+        expect(spy_presenter.products[1][:uri_name]).to eq('paint-mixing-easy-care')
 
         expect(spy_presenter.variants[0][:id]).to eq('192871-19291-39192-109283')
         expect(spy_presenter.variants[0][:article_number]).to eq('1111111')

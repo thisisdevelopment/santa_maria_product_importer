@@ -39,6 +39,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
           global_id: '2',
           type: 'Other',
           name: 'Easycare',
+          uri_name: 'easy-care',
           variants: [
             double(article_number: '581239'),
             double(article_number: '182356'),
@@ -48,6 +49,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
           global_id: '3',
           type: 'Paint',
           name: 'Weathershield',
+          uri_name: 'weather-shield',
           variants: [
             double(article_number: '192817'),
             double(article_number: '192811'),
@@ -59,10 +61,22 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         subject.execute(presenter)
 
         expect(presenter).to(
-          have_received(:product).with({ id: '2', type: 'Other', name: 'Easycare' }).ordered
+          have_received(:product)
+            .with(
+              id: '2',
+              type: 'Other',
+              name: 'Easycare',
+              uri_name: 'easy-care'
+            ).ordered
         )
         expect(presenter).to(
-          have_received(:product).with({ id: '3', type: 'Paint', name: 'Weathershield' }).ordered
+          have_received(:product)
+            .with(
+              id: '3',
+              type: 'Paint',
+              name: 'Weathershield',
+              uri_name: 'weather-shield'
+            ).ordered
         )
 
         expect(presenter).to(

@@ -6,7 +6,7 @@ module SantaMaria
       end
 
       class Product
-        attr_accessor :global_id, :type, :name
+        attr_accessor :global_id, :type, :name, :uri_name
 
         def variants
           response = Net::HTTP.get_response(URI("https://api/api/v2/products/#{global_id}"))
@@ -36,6 +36,7 @@ module SantaMaria
           product.global_id = p['globalId']
           product.type = p['productType']
           product.name = p['name']
+          product.uri_name = p['uri']
 
           yield product
         end
