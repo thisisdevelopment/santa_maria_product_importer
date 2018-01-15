@@ -5,13 +5,13 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
     match { |product| id == product.global_id }
   end
 
-  RSpec::Matchers.define :a_product_with_variant do |expected|
+  RSpec::Matchers.define :a_product_with_variants do |expected_variants|
     match do |product|
-      matches = product.variants.map do |variant|
-        variant.article_number == expected[:article_number]
+      matches = product.variants.each_with_index.map do |variant, i|
+        variant.article_number == expected_variants[i][:article_number]
       end
 
-      matches.include?(true)
+      !matches.include?(false)
     end
   end
 
@@ -36,22 +36,31 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
 
   context 'given a product with an id' do
     shared_examples 'santa maria gateway' do
-      let!(:stub_product_get) do
-        product = products[0]
-        global_id = product[:basic][:globalId]
-        product = product[:basic].merge(product[:extended])
+      let(:stub_product_get_requests) do
+        products.map do |product|
+          global_id = product[:basic][:globalId]
+          product = product[:basic].merge(product[:extended])
 
-        stub_request(:get, "https://api/api/v2/products/#{global_id}").to_return(
-          body: product.to_json,
-          status: 200
-        )
+          stub_request(:get, "https://api/api/v2/products/#{global_id}").to_return(
+            body: product.to_json,
+            status: 200
+          )
+        end
+      end
+
+      let!(:stub_product_get) do
+        stub_product_get_requests[0]
       end
 
       context 'when reading all products' do
         it 'yields a product with an id' do
-          global_id = expected_products[0][:global_id]
+          expected = expected_products.map do |expected_product|
+            global_id = expected_product[:global_id]
+            a_product_with_id(global_id)
+          end
+
           expect { |block| gateway.all_products(&block) }.to(
-            yield_with_args(a_product_with_id(global_id))
+            yield_successive_args(*expected)
           )
         end
 
@@ -68,12 +77,13 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         end
 
         it 'should yield a product with the correct variants' do
-          expected_products[0][:variants].each do |variant|
-            article_number = variant[:article_number]
-            expect { |block| gateway.all_products(&block) }.to(
-              yield_with_args(a_product_with_variant(article_number: article_number))
-            )
+          expected = expected_products.map do |expected_product|
+            a_product_with_variants(expected_product[:variants])
           end
+
+          expect { |block| gateway.all_products(&block) }.to(
+            yield_successive_args(*expected)
+          )
         end
       end
     end
@@ -165,6 +175,48 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
           {
             global_id: '912817261',
             variants: []
+          }
+        ]
+      end
+
+      it_behaves_like 'santa maria gateway'
+    end
+
+    context do
+      let(:products) do
+        [
+          {
+            basic: {
+              globalId: '912817261'
+            },
+            extended: {
+              sku: []
+            }
+          },
+          {
+            basic: {
+              globalId: '128371273'
+            },
+            extended: {
+              sku: [
+                { articleNumber: '9281727' }
+              ]
+            }
+          }
+        ]
+      end
+
+      let(:expected_products) do
+        [
+          {
+            global_id: '912817261',
+            variants: []
+          },
+          {
+            global_id: '128371273',
+            variants: [
+              { article_number: '9281727' }
+            ]
           }
         ]
       end

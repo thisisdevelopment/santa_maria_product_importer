@@ -13,15 +13,11 @@ module SantaMaria
 
           product = JSON.parse(response.body)
 
-          variants = []
-
-          if product['sku'].length > 0
+          product['sku'].map do |sku|
             variant = Variant.new
-            variant.article_number = product['sku'][0]['articleNumber']
-            variants << variant
+            variant.article_number = sku['articleNumber']
+            variant
           end
-
-          variants
         end
       end
 
@@ -35,9 +31,9 @@ module SantaMaria
         result = JSON.parse(response.body)
 
 
-        if result['products'].length > 0
+        result['products'].each do |p|
           product = Product.new
-          product.global_id = result['products'][0]['globalId']
+          product.global_id = p['globalId']
 
           yield product
         end

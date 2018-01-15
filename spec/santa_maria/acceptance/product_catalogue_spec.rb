@@ -82,5 +82,47 @@ RSpec.describe 'product catalogue' do
         expect(spy_presenter.variants[0][:article_number]).to eq('1111111')
       end
     end
+
+    context 'given two products with a variant' do
+      before do
+        stub_request(:get, "https://api/api/v2/products/192871-19291-39192-109283")
+          .to_return(
+            body: { sku: [{ articleNumber: '1111111' }] }.to_json,
+            status: 200
+          )
+
+        stub_request(:get, "https://api/api/v2/products/192871-19291-39192-982910")
+          .to_return(
+            body: { sku: [{ articleNumber: '2222222' }, {articleNumber: '3333333'}] }.to_json,
+            status: 200
+          )
+      end
+
+      let(:response) do
+        response = {
+          products: [{
+                       globalId: '192871-19291-39192-109283'
+                     },
+                     {
+                       globalId: '192871-19291-39192-982910'
+                     }]
+        }
+      end
+
+      it 'it able to extract those products' do
+        use_case = SantaMaria::UseCase::FetchProducts.new(
+          santa_maria: SantaMaria::Gateway::SantaMariaV2.new('http://api/')
+        )
+
+        spy_presenter = SpyPresenter.new
+        use_case.execute(spy_presenter)
+
+        expect(spy_presenter.products[0][:id]).to eq('192871-19291-39192-109283')
+        expect(spy_presenter.products[1][:id]).to eq('192871-19291-39192-982910')
+        expect(spy_presenter.variants[0][:article_number]).to eq('1111111')
+        expect(spy_presenter.variants[1][:article_number]).to eq('2222222')
+        expect(spy_presenter.variants[2][:article_number]).to eq('3333333')
+      end
+    end
   end
 end

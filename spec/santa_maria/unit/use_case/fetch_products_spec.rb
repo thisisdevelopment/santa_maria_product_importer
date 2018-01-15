@@ -39,6 +39,10 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         subject.execute(presenter)
         expect(presenter).to have_received(:product).with({ id: expected_global_id })
       end
+
+      it 'responds with an empty hash' do
+        expect(subject.execute(presenter)).to eq({})
+      end
     end
 
     context 'given one product with no variants' do
@@ -99,6 +103,50 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         let(:expected_article_number) { '581239' }
 
         it_behaves_like 'variant extractor'
+      end
+    end
+
+    context 'given two products and two variants each' do
+      let(:products) { [] }
+      before do
+        products << double(
+          global_id: '2',
+          variants: [
+            double(article_number: '581239'),
+            double(article_number: '182356'),
+          ]
+        )
+        products << double(
+          global_id: '3',
+          variants: [
+            double(article_number: '192817'),
+            double(article_number: '192811'),
+          ]
+        )
+      end
+
+      it 'exports all products first, then exports variants' do
+        subject.execute(presenter)
+
+        expect(presenter).to(
+          have_received(:product).with({ id: '2' }).ordered
+        )
+        expect(presenter).to(
+          have_received(:product).with({ id: '3' }).ordered
+        )
+
+        expect(presenter).to(
+          have_received(:variant).with({ article_number: '581239'}).ordered
+        )
+        expect(presenter).to(
+          have_received(:variant).with({ article_number: '182356' }).ordered
+        )
+        expect(presenter).to(
+          have_received(:variant).with({ article_number: '192817' }).ordered
+        )
+        expect(presenter).to(
+          have_received(:variant).with({ article_number: '192811' }).ordered
+        )
       end
     end
   end
