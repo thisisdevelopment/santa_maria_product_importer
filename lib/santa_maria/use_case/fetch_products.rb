@@ -10,7 +10,8 @@ module SantaMaria
         santa_maria.all_products do |product|
           presenter.product(
             id: product.global_id,
-            type: product.type
+            type: product.type,
+            name: product.name
           )
           products << product
         end

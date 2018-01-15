@@ -32,88 +32,13 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
       described_class.new(santa_maria: santa_maria)
     end
 
-    shared_examples 'product extractor' do
-      let(:products) { [] }
-
-      it 'presents the product' do
-        subject.execute(presenter)
-        expect(presenter).to have_received(:product).with(expected_product)
-      end
-
-      it 'responds with an empty hash' do
-        expect(subject.execute(presenter)).to eq({})
-      end
-    end
-
-    context 'given one product with no variants' do
-      context do
-        before do
-          products << double(global_id: '1', type: 'Paint', variants: [])
-        end
-
-        let(:expected_product) { { id: '1', type: 'Paint' } }
-
-        it_behaves_like 'product extractor'
-      end
-
-      context do
-        before do
-          products << double(global_id: '2', type: 'Paint', variants: [])
-        end
-
-        let(:expected_product) { { id: '2', type: 'Paint' } }
-
-        it_behaves_like 'product extractor'
-      end
-    end
-
-    shared_examples 'variant extractor' do
-      let(:products) { [] }
-
-      it 'presents the variant' do
-        subject.execute(presenter)
-        expect(presenter).to(
-          have_received(:variant).with({ id: '2', article_number: expected_article_number })
-        )
-      end
-    end
-
-    context 'given one product with one variant' do
-      context do
-        before do
-          products << double(
-            global_id: '2',
-            type: 'Paint',
-            variants: [double(article_number: '98271')]
-          )
-        end
-
-        let(:expected_article_number) { '98271' }
-
-        it_behaves_like 'variant extractor'
-      end
-
-      context do
-        before do
-          products << double(
-            global_id: '2',
-            type: 'Paint',
-            variants: [double(article_number: '581239')]
-          )
-        end
-
-        let(:expected_article_number) { '581239' }
-
-        it_behaves_like 'variant extractor'
-      end
-    end
-
     context 'given two products and two variants each' do
       let(:products) { [] }
       before do
         products << double(
           global_id: '2',
           type: 'Other',
+          name: 'Easycare',
           variants: [
             double(article_number: '581239'),
             double(article_number: '182356'),
@@ -122,6 +47,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         products << double(
           global_id: '3',
           type: 'Paint',
+          name: 'Weathershield',
           variants: [
             double(article_number: '192817'),
             double(article_number: '192811'),
@@ -133,10 +59,10 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         subject.execute(presenter)
 
         expect(presenter).to(
-          have_received(:product).with({ id: '2', type: 'Other' }).ordered
+          have_received(:product).with({ id: '2', type: 'Other', name: 'Easycare' }).ordered
         )
         expect(presenter).to(
-          have_received(:product).with({ id: '3', type: 'Paint' }).ordered
+          have_received(:product).with({ id: '3', type: 'Paint', name: 'Weathershield' }).ordered
         )
 
         expect(presenter).to(

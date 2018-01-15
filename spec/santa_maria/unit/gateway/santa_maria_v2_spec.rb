@@ -78,108 +78,9 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         [
           {
             basic: {
-              globalId: '19281811918',
-              productType: 'Paint'
-            },
-            extended: {
-              sku: [
-                {
-                  articleNumber: '1923810'
-                }
-              ]
-            }
-          }
-        ]
-      end
-
-      let(:expected_products) do
-        [
-          {
-            global_id: '19281811918',
-            type: 'Paint',
-            variants: [
-              {
-                article_number: '1923810'
-              }
-            ]
-          }
-        ]
-      end
-
-      it_behaves_like 'santa maria gateway'
-    end
-
-    context do
-      let(:products) do
-        [
-          {
-            basic: {
               globalId: '912817261',
-              productType: 'Primer'
-            },
-            extended: {
-              sku: [
-                {
-                  articleNumber: '5819281'
-                }
-              ]
-            }
-          }
-        ]
-      end
-
-      let(:expected_products) do
-        [
-          {
-            global_id: '912817261',
-            type: 'Primer',
-            variants: [
-              {
-                article_number: '5819281'
-              }
-            ]
-          }
-        ]
-      end
-
-      it_behaves_like 'santa maria gateway'
-    end
-
-    context do
-      let(:products) do
-        [
-          {
-            basic: {
-              globalId: '912817261',
-              productType: 'Other',
-            },
-            extended: {
-              sku: []
-            }
-          }
-        ]
-      end
-
-      let(:expected_products) do
-        [
-          {
-            global_id: '912817261',
-            type: 'Other',
-            variants: []
-          }
-        ]
-      end
-
-      it_behaves_like 'santa maria gateway'
-    end
-
-    context do
-      let(:products) do
-        [
-          {
-            basic: {
-              globalId: '912817261',
-              productType: 'Paint'
+              productType: 'Paint',
+              name: 'Easycare'
             },
             extended: {
               sku: []
@@ -188,11 +89,13 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
           {
             basic: {
               globalId: '128371273',
-              productType: 'Primer'
+              productType: 'Primer',
+              name: 'Weathershield'
             },
             extended: {
               sku: [
-                { articleNumber: '9281727' }
+                { articleNumber: '9281727' },
+                { articleNumber: '1821122' }
               ]
             }
           }
@@ -204,13 +107,16 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
           {
             global_id: '912817261',
             type: 'Paint',
+            name: 'Easycare',
             variants: []
           },
           {
             global_id: '128371273',
             type: 'Primer',
+            name: 'Weathershield',
             variants: [
-              { article_number: '9281727' }
+              { article_number: '9281727' },
+              { article_number: '1821122' }
             ]
           }
         ]
