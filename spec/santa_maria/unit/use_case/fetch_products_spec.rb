@@ -37,7 +37,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
 
       it 'presents the product' do
         subject.execute(presenter)
-        expect(presenter).to have_received(:product).with({ id: expected_global_id })
+        expect(presenter).to have_received(:product).with(expected_product)
       end
 
       it 'responds with an empty hash' do
@@ -48,20 +48,20 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
     context 'given one product with no variants' do
       context do
         before do
-          products << double(global_id: '1', variants: [])
+          products << double(global_id: '1', type: 'Paint', variants: [])
         end
 
-        let(:expected_global_id) { '1' }
+        let(:expected_product) { { id: '1', type: 'Paint' } }
 
         it_behaves_like 'product extractor'
       end
 
       context do
         before do
-          products << double(global_id: '2', variants: [])
+          products << double(global_id: '2', type: 'Paint', variants: [])
         end
 
-        let(:expected_global_id) { '2' }
+        let(:expected_product) { { id: '2', type: 'Paint' } }
 
         it_behaves_like 'product extractor'
       end
@@ -83,6 +83,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         before do
           products << double(
             global_id: '2',
+            type: 'Paint',
             variants: [double(article_number: '98271')]
           )
         end
@@ -96,6 +97,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         before do
           products << double(
             global_id: '2',
+            type: 'Paint',
             variants: [double(article_number: '581239')]
           )
         end
@@ -111,6 +113,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
       before do
         products << double(
           global_id: '2',
+          type: 'Other',
           variants: [
             double(article_number: '581239'),
             double(article_number: '182356'),
@@ -118,6 +121,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         )
         products << double(
           global_id: '3',
+          type: 'Paint',
           variants: [
             double(article_number: '192817'),
             double(article_number: '192811'),
@@ -129,10 +133,10 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         subject.execute(presenter)
 
         expect(presenter).to(
-          have_received(:product).with({ id: '2' }).ordered
+          have_received(:product).with({ id: '2', type: 'Other' }).ordered
         )
         expect(presenter).to(
-          have_received(:product).with({ id: '3' }).ordered
+          have_received(:product).with({ id: '3', type: 'Paint' }).ordered
         )
 
         expect(presenter).to(

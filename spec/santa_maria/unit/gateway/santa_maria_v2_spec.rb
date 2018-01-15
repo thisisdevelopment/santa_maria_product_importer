@@ -1,20 +1,6 @@
 RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
   let(:gateway) { described_class.new('https://api/') }
 
-  RSpec::Matchers.define :a_product_with_id do |id|
-    match { |product| id == product.global_id }
-  end
-
-  RSpec::Matchers.define :a_product_with_variants do |expected_variants|
-    match do |product|
-      matches = product.variants.each_with_index.map do |variant, i|
-        variant.article_number == expected_variants[i][:article_number]
-      end
-
-      !matches.include?(false)
-    end
-  end
-
   before do
     response = {
       products: products.map { |product| product[:basic] }
@@ -55,8 +41,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
       context 'when reading all products' do
         it 'yields a product with an id' do
           expected = expected_products.map do |expected_product|
-            global_id = expected_product[:global_id]
-            a_product_with_id(global_id)
+            a_product(expected_product)
           end
 
           expect { |block| gateway.all_products(&block) }.to(
@@ -93,7 +78,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         [
           {
             basic: {
-              globalId: '19281811918'
+              globalId: '19281811918',
+              productType: 'Paint'
             },
             extended: {
               sku: [
@@ -110,6 +96,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         [
           {
             global_id: '19281811918',
+            type: 'Paint',
             variants: [
               {
                 article_number: '1923810'
@@ -127,7 +114,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         [
           {
             basic: {
-              globalId: '912817261'
+              globalId: '912817261',
+              productType: 'Primer'
             },
             extended: {
               sku: [
@@ -144,6 +132,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         [
           {
             global_id: '912817261',
+            type: 'Primer',
             variants: [
               {
                 article_number: '5819281'
@@ -161,7 +150,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         [
           {
             basic: {
-              globalId: '912817261'
+              globalId: '912817261',
+              productType: 'Other',
             },
             extended: {
               sku: []
@@ -174,6 +164,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         [
           {
             global_id: '912817261',
+            type: 'Other',
             variants: []
           }
         ]
@@ -187,7 +178,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         [
           {
             basic: {
-              globalId: '912817261'
+              globalId: '912817261',
+              productType: 'Paint'
             },
             extended: {
               sku: []
@@ -195,7 +187,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
           },
           {
             basic: {
-              globalId: '128371273'
+              globalId: '128371273',
+              productType: 'Primer'
             },
             extended: {
               sku: [
@@ -210,10 +203,12 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         [
           {
             global_id: '912817261',
+            type: 'Paint',
             variants: []
           },
           {
             global_id: '128371273',
+            type: 'Primer',
             variants: [
               { article_number: '9281727' }
             ]

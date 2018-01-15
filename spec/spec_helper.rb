@@ -15,3 +15,20 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+RSpec::Matchers.define :a_product do |expected_product|
+  match do |product|
+    expected_product[:global_id] == product.global_id &&
+      expected_product[:type] == product.type
+  end
+end
+
+RSpec::Matchers.define :a_product_with_variants do |expected_variants|
+  match do |product|
+    matches = product.variants.each_with_index.map do |variant, i|
+      variant.article_number == expected_variants[i][:article_number]
+    end
+
+    !matches.include?(false)
+  end
+end

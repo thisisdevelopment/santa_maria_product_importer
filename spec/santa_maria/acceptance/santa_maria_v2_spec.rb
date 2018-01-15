@@ -35,7 +35,8 @@ RSpec.describe 'santa maria v2' do
       let(:response) do
         response = {
           products: [{
-                       globalId: 'fb1c568f-2c42-4b7d-8cac-a18500de96e8'
+                       globalId: 'fb1c568f-2c42-4b7d-8cac-a18500de96e8',
+                       productType: 'Other'
                      }]
         }
       end
@@ -49,6 +50,7 @@ RSpec.describe 'santa maria v2' do
         use_case.execute(spy_presenter)
 
         expect(spy_presenter.products[0][:id]).to eq('fb1c568f-2c42-4b7d-8cac-a18500de96e8')
+        expect(spy_presenter.products[0][:type]).to eq('Other')
         expect(spy_presenter.variants).to eq([])
       end
     end
@@ -65,7 +67,8 @@ RSpec.describe 'santa maria v2' do
       let(:response) do
         response = {
           products: [{
-                       globalId: '192871-19291-39192-109283'
+                       globalId: '192871-19291-39192-109283',
+                       productType: 'Primer'
                      }]
         }
       end
@@ -79,6 +82,7 @@ RSpec.describe 'santa maria v2' do
         use_case.execute(spy_presenter)
 
         expect(spy_presenter.products[0][:id]).to eq('192871-19291-39192-109283')
+        expect(spy_presenter.products[0][:type]).to eq('Primer')
         expect(spy_presenter.variants[0][:article_number]).to eq('1111111')
       end
     end
@@ -101,10 +105,12 @@ RSpec.describe 'santa maria v2' do
       let(:response) do
         response = {
           products: [{
-                       globalId: '192871-19291-39192-109283'
+                       globalId: '192871-19291-39192-109283',
+                       productType: 'Paint'
                      },
                      {
-                       globalId: '192871-19291-39192-982910'
+                       globalId: '192871-19291-39192-982910',
+                       productType: 'Paint'
                      }]
         }
       end
@@ -118,7 +124,10 @@ RSpec.describe 'santa maria v2' do
         use_case.execute(spy_presenter)
 
         expect(spy_presenter.products[0][:id]).to eq('192871-19291-39192-109283')
+        expect(spy_presenter.products[0][:type]).to eq('Paint')
+
         expect(spy_presenter.products[1][:id]).to eq('192871-19291-39192-982910')
+        expect(spy_presenter.products[1][:type]).to eq('Paint')
 
         expect(spy_presenter.variants[0][:id]).to eq('192871-19291-39192-109283')
         expect(spy_presenter.variants[0][:article_number]).to eq('1111111')
