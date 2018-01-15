@@ -12,7 +12,8 @@ module SantaMaria
             id: product.global_id,
             type: product.type,
             name: product.name,
-            uri_name: product.uri_name
+            uri_name: product.uri_name,
+            description: product.description
           )
           products << product
         end

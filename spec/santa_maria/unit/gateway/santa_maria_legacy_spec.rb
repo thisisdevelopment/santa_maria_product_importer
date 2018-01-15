@@ -81,7 +81,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
               globalId: '912817261',
               productType: 'Other',
               name: 'Easycare',
-              uriFriendlyName: 'easy-care'
+              uriFriendlyName: 'easy-care',
+              localSlogan: 'Easycare works really well!'
             },
             extended: {
               packages: []
@@ -92,7 +93,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
               globalId: '128371273',
               productType: 'Primer',
               name: 'Weathershield',
-              uriFriendlyName: 'weather-shield'
+              uriFriendlyName: 'weather-shield',
+              localSlogan: 'Weathershield is super tough'
             },
             extended: {
               packages: [
@@ -111,6 +113,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
             type: 'Other',
             name: 'Easycare',
             uri_name: 'easy-care',
+            description: 'Easycare works really well!',
             variants: []
           },
           {
@@ -118,6 +121,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
             type: 'Primer',
             name: 'Weathershield',
             uri_name: 'weather-shield',
+            description: 'Weathershield is super tough',
             variants: [
               { article_number: '9281727' },
               { article_number: '1821122' }

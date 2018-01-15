@@ -81,7 +81,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
               globalId: '912817261',
               productType: 'Paint',
               name: 'Easycare',
-              uri: 'easy-care'
+              uri: 'easy-care',
+              localSlogan: 'Easycare works really well!'
             },
             extended: {
               sku: []
@@ -92,7 +93,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
               globalId: '128371273',
               productType: 'Primer',
               name: 'Weathershield',
-              uri: 'weather-shield'
+              uri: 'weather-shield',
+              localSlogan: 'Weathershield is super tough'
             },
             extended: {
               sku: [
@@ -111,6 +113,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
             type: 'Paint',
             name: 'Easycare',
             uri_name: 'easy-care',
+            description: 'Easycare works really well!',
             variants: []
           },
           {
@@ -118,6 +121,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
             type: 'Primer',
             name: 'Weathershield',
             uri_name: 'weather-shield',
+            description: 'Weathershield is super tough',
             variants: [
               { article_number: '9281727' },
               { article_number: '1821122' }

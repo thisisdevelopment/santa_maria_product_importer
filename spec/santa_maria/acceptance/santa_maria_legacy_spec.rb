@@ -46,13 +46,15 @@ RSpec.describe 'santa maria legacy' do
                        globalId: '192871-19291-39192-109283',
                        productType: 'Paint',
                        name: 'Easycare',
-                       uriFriendlyName: 'easy-care'
+                       uriFriendlyName: 'easy-care',
+                       localSlogan: 'Dulux easy care...'
                      },
                      {
                        globalId: '192871-19291-39192-982910',
                        productType: 'Paint',
                        name: 'Paint Mixing Easycare',
-                       uriFriendlyName: 'paint-mixing-easy-care'
+                       uriFriendlyName: 'paint-mixing-easy-care',
+                       localSlogan: 'Dulux paint mixing easy care...'
                      }]
         }
       end
@@ -69,11 +71,13 @@ RSpec.describe 'santa maria legacy' do
         expect(spy_presenter.products[0][:type]).to eq('Paint')
         expect(spy_presenter.products[0][:name]).to eq('Easycare')
         expect(spy_presenter.products[0][:uri_name]).to eq('easy-care')
+        expect(spy_presenter.products[0][:description]).to eq('Dulux easy care...')
 
         expect(spy_presenter.products[1][:id]).to eq('192871-19291-39192-982910')
         expect(spy_presenter.products[1][:type]).to eq('Paint')
         expect(spy_presenter.products[1][:name]).to eq('Paint Mixing Easycare')
         expect(spy_presenter.products[1][:uri_name]).to eq('paint-mixing-easy-care')
+        expect(spy_presenter.products[1][:description]).to eq('Dulux paint mixing easy care...')
 
         expect(spy_presenter.variants[0][:id]).to eq('192871-19291-39192-109283')
         expect(spy_presenter.variants[0][:article_number]).to eq('1111111')
