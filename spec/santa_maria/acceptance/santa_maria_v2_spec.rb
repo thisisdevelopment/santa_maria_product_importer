@@ -1,4 +1,4 @@
-RSpec.describe 'product catalogue' do
+RSpec.describe 'santa maria v2' do
   class SpyPresenter
     attr_reader :products, :variants
 
@@ -109,7 +109,7 @@ RSpec.describe 'product catalogue' do
         }
       end
 
-      it 'it able to extract those products' do
+      it 'is able to extract those products' do
         use_case = SantaMaria::UseCase::FetchProducts.new(
           santa_maria: SantaMaria::Gateway::SantaMariaV2.new('http://api/')
         )
