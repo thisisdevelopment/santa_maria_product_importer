@@ -38,7 +38,7 @@ module SantaMaria
           product.name = p['name']
           product.uri_name = p['uri']
           product.description = p['localSlogan']
-          product.image_url = p['packshots']&.[](0)&.[]('m')
+          product.image_url = p.dig('packshots', 0, 'm')
 
           yield product
         end
