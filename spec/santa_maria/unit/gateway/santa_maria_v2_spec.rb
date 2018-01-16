@@ -82,7 +82,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
               productType: 'Paint',
               name: 'Easycare',
               uri: 'easy-care',
-              localSlogan: 'Easycare works really well!'
+              localSlogan: 'Easycare works really well!',
+              packshots: [{ m: 'https://packshots/912817261.jpg' }]
             },
             extended: {
               sku: []
@@ -94,7 +95,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
               productType: 'Primer',
               name: 'Weathershield',
               uri: 'weather-shield',
-              localSlogan: 'Weathershield is super tough'
+              localSlogan: 'Weathershield is super tough',
+              packshots: [{}]
             },
             extended: {
               sku: [
@@ -102,7 +104,23 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
                 { articleNumber: '1821122' }
               ]
             }
+          },
+          {
+            basic: {
+              globalId: '91982371',
+              productType: 'Primer',
+              name: 'Weathershield Pro',
+              uri: 'weather-shield-pro',
+              localSlogan: 'Weathershield PRO is super tough'
+            },
+            extended: {
+              sku: [
+                { articleNumber: '92817271' },
+                { articleNumber: '18211221' }
+              ]
+            }
           }
+
         ]
       end
 
@@ -114,6 +132,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
             name: 'Easycare',
             uri_name: 'easy-care',
             description: 'Easycare works really well!',
+            image_url: 'https://packshots/912817261.jpg',
             variants: []
           },
           {
@@ -122,9 +141,22 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
             name: 'Weathershield',
             uri_name: 'weather-shield',
             description: 'Weathershield is super tough',
+            image_url: nil,
             variants: [
               { article_number: '9281727' },
               { article_number: '1821122' }
+            ]
+          },
+          {
+            global_id: '91982371',
+            type: 'Primer',
+            name: 'Weathershield Pro',
+            uri_name: 'weather-shield-pro',
+            description: 'Weathershield PRO is super tough',
+            image_url: nil,
+            variants: [
+              { article_number: '92817271' },
+              { article_number: '18211221' }
             ]
           }
         ]

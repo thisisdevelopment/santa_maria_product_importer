@@ -22,7 +22,8 @@ RSpec::Matchers.define :a_product do |expected_product|
       expected_product[:type] == product.type &&
       expected_product[:name] == product.name &&
       expected_product[:uri_name] == product.uri_name &&
-      expected_product[:description] == product.description
+      expected_product[:description] == product.description &&
+      expected_product[:image_url] == product.image_url
   end
 end
 

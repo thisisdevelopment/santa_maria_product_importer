@@ -13,7 +13,8 @@ module SantaMaria
             type: product.type,
             name: product.name,
             uri_name: product.uri_name,
-            description: product.description
+            description: product.description,
+            image_url: product.image_url
           )
           products << product
         end

@@ -41,6 +41,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
           name: 'Easycare',
           uri_name: 'easy-care',
           description: 'Easier than 1-2-3',
+          image_url: 'https://packshots/easy-care-123.jpg',
           variants: [
             double(article_number: '581239'),
             double(article_number: '182356'),
@@ -52,6 +53,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
           name: 'Weathershield',
           uri_name: 'weather-shield',
           description: 'More shielding than the Star Ship Enterprise',
+          image_url: nil,
           variants: [
             double(article_number: '192817'),
             double(article_number: '192811'),
@@ -69,7 +71,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               type: 'Other',
               name: 'Easycare',
               uri_name: 'easy-care',
-              description: 'Easier than 1-2-3'
+              description: 'Easier than 1-2-3',
+              image_url: 'https://packshots/easy-care-123.jpg'
             ).ordered
         )
         expect(presenter).to(
@@ -79,7 +82,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               type: 'Paint',
               name: 'Weathershield',
               uri_name: 'weather-shield',
-              description: 'More shielding than the Star Ship Enterprise'
+              description: 'More shielding than the Star Ship Enterprise',
+              image_url: nil
             ).ordered
         )
 
