@@ -1,8 +1,4 @@
 RSpec.describe SantaMaria::UseCase::FetchProducts do
-  class ProductStub
-    attr_accessor :global_id, :sku
-  end
-
   class SantaMariaStub
     attr_accessor :products
 
