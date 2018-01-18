@@ -3,10 +3,6 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
     attr_accessor :global_id, :sku
   end
 
-  class VariantStub
-    attr
-  end
-
   class SantaMariaStub
     attr_accessor :products
 
