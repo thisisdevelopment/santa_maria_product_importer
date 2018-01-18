@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "santa_maria/use_case/fetch_products"
+require "santa_maria/domain/variant"
 require "santa_maria/gateway/santa_maria_v2"
 require "santa_maria/gateway/santa_maria_legacy"
 require 'webmock/rspec'
@@ -29,8 +30,18 @@ end
 
 RSpec::Matchers.define :a_product_with_variants do |expected_variants|
   match do |product|
-    matches = product.variants.each_with_index.map do |variant, i|
-      variant.article_number == expected_variants[i][:article_number]
+    variants = product.variants
+    matches = variants.each_with_index.map do |variant, i|
+      variant.article_number == expected_variants[i][:article_number] &&
+        variant.price == expected_variants[i][:price] &&
+        variant.valid? == expected_variants[i][:valid] &&
+        variant.on_sale? == expected_variants[i][:on_sale] &&
+        variant.color_id == expected_variants[i][:color_id] &&
+        variant.ready_mix? == expected_variants[i][:ready_mix] &&
+        variant.pack_size == expected_variants[i][:pack_size] &&
+        variant.pattern == expected_variants[i][:pattern] &&
+        variant.ean == expected_variants[i][:ean] &&
+        variant.name == expected_variants[i][:name]
     end
 
     !matches.include?(false)

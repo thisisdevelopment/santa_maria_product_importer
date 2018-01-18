@@ -43,8 +43,30 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
           description: 'Easier than 1-2-3',
           image_url: 'https://packshots/easy-care-123.jpg',
           variants: [
-            double(article_number: '581239'),
-            double(article_number: '182356'),
+            double(
+              article_number: '581239',
+              price: '1.00',
+              valid?: true,
+              on_sale?: false,
+              color_id: '1119298',
+              ready_mix?: false,
+              pack_size: '5L',
+              pattern: '',
+              ean: 'ANEAN',
+              name: 'Green'
+            ),
+            double(
+              article_number: '182356',
+              price: '1381.21',
+              valid?: true,
+              on_sale?: true,
+              color_id: '',
+              ready_mix?: true,
+              pack_size: '2.5L',
+              pattern: 'weather-stripes',
+              ean: '1928172376162',
+              name: 'Teal'
+            ),
           ]
         )
         products << double(
@@ -55,8 +77,30 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
           description: 'More shielding than the Star Ship Enterprise',
           image_url: nil,
           variants: [
-            double(article_number: '192817'),
-            double(article_number: '192811'),
+            double(
+              article_number: '192817',
+              price: '1381.21',
+              valid?: true,
+              on_sale?: true,
+              color_id: '2376162',
+              ready_mix?: true,
+              pack_size: '2.5L',
+              pattern: 'weather-stripes',
+              ean: '1928172376162',
+              name: 'Orange'
+            ),
+            double(
+              article_number: '192811',
+              price: '1.00',
+              valid?: true,
+              on_sale?: false,
+              color_id: '1119298',
+              ready_mix?: false,
+              pack_size: '5L',
+              pattern: nil,
+              ean: '',
+              name: 'Red'
+            ),
           ]
         )
       end
@@ -88,16 +132,68 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
         )
 
         expect(presenter).to(
-          have_received(:variant).with({ id: '2', article_number: '581239'}).ordered
+          have_received(:variant)
+            .with(
+              id: '2',
+              article_number: '581239',
+              price: '1.00',
+              valid: true,
+              on_sale: false,
+              color_id: '1119298',
+              ready_mix: false,
+              pack_size: '5L',
+              pattern: nil,
+              ean: 'ANEAN',
+              name: 'Green'
+            ).ordered
         )
         expect(presenter).to(
-          have_received(:variant).with({ id: '2', article_number: '182356' }).ordered
+          have_received(:variant)
+            .with(
+              id: '2',
+              article_number: '182356',
+              price: '1381.21',
+              valid: true,
+              on_sale: true,
+              color_id: nil,
+              ready_mix: true,
+              pack_size: '2.5L',
+              pattern: 'weather-stripes',
+              ean: '1928172376162',
+              name: 'Teal'
+            ).ordered
         )
         expect(presenter).to(
-          have_received(:variant).with({ id: '3', article_number: '192817' }).ordered
+          have_received(:variant)
+            .with(
+              id: '3',
+              article_number: '192817',
+              price: '1381.21',
+              valid: true,
+              on_sale: true,
+              color_id: '2376162',
+              ready_mix: true,
+              pack_size: '2.5L',
+              pattern: 'weather-stripes',
+              ean: '1928172376162',
+              name: 'Orange'
+            ).ordered
         )
         expect(presenter).to(
-          have_received(:variant).with({ id: '3', article_number: '192811' }).ordered
+          have_received(:variant)
+            .with(
+              id: '3',
+              article_number: '192811',
+              price: '1.00',
+              valid: true,
+              on_sale: false,
+              color_id: '1119298',
+              ready_mix: false,
+              pack_size: '5L',
+              pattern: nil,
+              ean: nil,
+              name: 'Red'
+            ).ordered
         )
       end
     end

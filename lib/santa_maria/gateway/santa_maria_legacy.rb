@@ -1,10 +1,6 @@
 module SantaMaria
   module Gateway
     class SantaMariaLegacy
-      class Variant
-        attr_accessor :article_number
-      end
-
       class Product
         attr_accessor :global_id, :type, :name, :uri_name, :description, :image_url
 
@@ -13,9 +9,19 @@ module SantaMaria
 
           product = JSON.parse(response.body)
 
-          product['packages'].map do |sku|
-            variant = Variant.new
-            variant.article_number = sku['articleNumber']
+          product['packages'].map do |package|
+            variant = SantaMaria::Domain::Variant.new
+            variant.article_number = package['articleNumber']
+            variant.price = package['price']
+            variant.name = package['colorTranslation']
+            variant.color_id = package['colorId']
+            variant.pack_size = package['friendlyPackSize']
+            variant.pattern = package['patternId']
+            variant.ean = package['EANCode']
+            variant.valid = package['validEcomData']
+            variant.on_sale = package['readyForSale']
+            variant.ready_mix = !package['tintedOrReadyMix'].eql?('Tinted')
+
             variant
           end
         end

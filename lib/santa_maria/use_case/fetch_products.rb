@@ -23,7 +23,16 @@ module SantaMaria
           product.variants.each do |variant|
             presenter.variant(
               id: product.global_id,
-              article_number: variant.article_number
+              article_number: variant.article_number,
+              price: variant.price,
+              valid: variant.valid?,
+              on_sale: variant.on_sale?,
+              color_id: variant.color_id == '' ? nil : variant.color_id,
+              ready_mix: variant.ready_mix?,
+              pack_size: variant.pack_size,
+              pattern: variant.pattern == '' ? nil : variant.pattern,
+              ean: variant.ean == '' ? nil : variant.ean,
+              name: variant.name
             )
           end
         end

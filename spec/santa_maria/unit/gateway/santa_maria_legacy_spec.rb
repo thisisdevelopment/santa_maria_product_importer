@@ -102,8 +102,30 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
             },
             extended: {
               packages: [
-                { articleNumber: '9281727' },
-                { articleNumber: '1821122' }
+                {
+                  articleNumber: '9281727',
+                  price: '19.29',
+                  colorTranslation: 'Pure Brilliant Teal',
+                  validEcomData: true,
+                  colorId: '1827162',
+                  friendlyPackSize: '5L',
+                  patternId: 'square-print',
+                  EANCode: '92817271827162',
+                  readyForSale: true,
+                  tintedOrReadyMix: 'Tinted'
+                },
+                {
+                  articleNumber: '1821122',
+                  price: '39.24',
+                  colorTranslation: 'Pure Brilliant Green',
+                  validEcomData: false,
+                  colorId: '9122162',
+                  friendlyPackSize: '2.5L',
+                  patternId: 'triangle-print',
+                  EANCode: '1010101010101010',
+                  readyForSale: false,
+                  tintedOrReadyMix: 'ReadyMix'
+                }
               ]
             }
           },
@@ -117,8 +139,30 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
             },
             extended: {
               packages: [
-                { articleNumber: '92817271' },
-                { articleNumber: '18211221' }
+                {
+                  articleNumber: '92817271',
+                  price: '19.29',
+                  colorTranslation: 'Pure Brilliant Teal',
+                  validEcomData: true,
+                  colorId: '1827162',
+                  friendlyPackSize: '5L',
+                  patternId: 'square-print',
+                  EANCode: '92817271827162',
+                  readyForSale: true,
+                  tintedOrReadyMix: 'Tinted'
+                },
+                {
+                  articleNumber: '18211221',
+                  price: '19.29',
+                  colorTranslation: 'Pure Brilliant Teal',
+                  validEcomData: true,
+                  colorId: '1827162',
+                  friendlyPackSize: '5L',
+                  patternId: 'square-print',
+                  EANCode: '92817271827162',
+                  readyForSale: true,
+                  tintedOrReadyMix: 'Not Applicable'
+                }
               ]
             }
           }
@@ -144,8 +188,30 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
             description: 'Weathershield is super tough',
             image_url: nil,
             variants: [
-              { article_number: '9281727' },
-              { article_number: '1821122' }
+              {
+                article_number: '9281727',
+                price: '19.29',
+                valid: true,
+                on_sale: true,
+                color_id: '1827162',
+                ready_mix: false,
+                pack_size: '5L',
+                pattern: 'square-print',
+                ean: '92817271827162',
+                name: 'Pure Brilliant Teal'
+              },
+              {
+                article_number: '1821122',
+                price: '39.24',
+                valid: false,
+                on_sale: false,
+                color_id: '9122162',
+                ready_mix: true,
+                pack_size: '2.5L',
+                pattern: 'triangle-print',
+                ean: '1010101010101010',
+                name: 'Pure Brilliant Green'
+              }
             ]
           },
           {
@@ -156,8 +222,30 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
             description: 'Weathershield PRO is super tough',
             image_url: nil,
             variants: [
-              { article_number: '92817271' },
-              { article_number: '18211221' }
+              {
+                article_number: '92817271',
+                price: '19.29',
+                valid: true,
+                on_sale: true,
+                color_id: '1827162',
+                ready_mix: false,
+                pack_size: '5L',
+                pattern: 'square-print',
+                ean: '92817271827162',
+                name: 'Pure Brilliant Teal'
+              },
+              {
+                article_number: '18211221',
+                price: '19.29',
+                valid: true,
+                on_sale: true,
+                color_id: '1827162',
+                ready_mix: true,
+                pack_size: '5L',
+                pattern: 'square-print',
+                ean: '92817271827162',
+                name: 'Pure Brilliant Teal'
+              }
             ]
           }
         ]

@@ -50,14 +50,41 @@ RSpec.describe 'santa maria' do
         variant_1 = spy_presenter.variants[0]
         expect(variant_1[:id]).to eq('192871-19291-39192-109283')
         expect(variant_1[:article_number]).to eq('1111111')
+        expect(variant_1[:price]).to eq('45.80')
+        expect(variant_1[:valid]).to eq(true)
+        expect(variant_1[:on_sale]).to eq(true)
+        expect(variant_1[:color_id]).to eq('2981722')
+        expect(variant_1[:ready_mix]).to eq(true)
+        expect(variant_1[:pack_size]).to eq('2.5L')
+        expect(variant_1[:pattern]).to be_nil
+        expect(variant_1[:ean]).to eq('11111112981722')
+        expect(variant_1[:name]).to eq('Radioactive Orange')
 
         variant_2 = spy_presenter.variants[1]
         expect(variant_2[:id]).to eq('192871-19291-39192-982910')
         expect(variant_2[:article_number]).to eq('2222222')
+        expect(variant_2[:price]).to eq('19.29')
+        expect(variant_2[:valid]).to eq(true)
+        expect(variant_2[:on_sale]).to eq(true)
+        expect(variant_2[:color_id]).to eq('1827162')
+        expect(variant_2[:ready_mix]).to eq(false)
+        expect(variant_2[:pack_size]).to eq('2.5L')
+        expect(variant_2[:pattern]).to eq('square-print')
+        expect(variant_2[:ean]).to eq('22222221827162')
+        expect(variant_2[:name]).to eq('Pure Brilliant Red')
 
         variant_3 = spy_presenter.variants[2]
         expect(variant_3[:id]).to eq('192871-19291-39192-982910')
         expect(variant_3[:article_number]).to eq('3333333')
+        expect(variant_3[:price]).to eq('45.80')
+        expect(variant_3[:valid]).to eq(false)
+        expect(variant_3[:on_sale]).to eq(false)
+        expect(variant_3[:ready_mix]).to eq(true)
+        expect(variant_3[:pack_size]).to eq('2.5L')
+        expect(variant_3[:color_id]).to be_nil
+        expect(variant_3[:pattern]).to be_nil
+        expect(variant_3[:ean]).to be_nil
+        expect(variant_3[:name]).to be_nil
       end
     end
 
@@ -71,6 +98,7 @@ RSpec.describe 'santa maria' do
               validEcomData: true,
               readyForSale: true,
               colorId: '2981722',
+              colorTranslation: 'Radioactive Orange',
               tintedOrReadyMix: 'ReadyMix',
               friendlyPackSize: '2.5L',
               patternId: '',
@@ -93,8 +121,9 @@ RSpec.describe 'santa maria' do
               validEcomData: true,
               readyForSale: true,
               colorId: '1827162',
+              colorTranslation: 'Pure Brilliant Red',
               tintedOrReadyMix: 'Tinted',
-              friendlyPackSize: '5L',
+              friendlyPackSize: '2.5L',
               patternId: 'square-print',
               EANCode: '22222221827162'
             },
@@ -161,17 +190,17 @@ RSpec.describe 'santa maria' do
               readyForSale: true,
               colorIds: [
                 {
-                  'colorId': '1187921'
+                  colorCollectionColors: [
+                    {
+                      colorCollectionColorID: '2981722',
+                      colorTranslation: 'Radioactive Orange'
+                    }
+                  ]
                 }
               ],
               tintedOrReadyMix: 'ReadyMix',
               friendlyPackSizeTranslation: '2.5L',
-              pattern: [
-                {
-                  name: ''
-                }
-              ],
-              eanCode: '5010212456088'
+              eanCode: '11111112981722'
             }
           ]
         }
@@ -186,11 +215,35 @@ RSpec.describe 'santa maria' do
           sku: [
             {
               articleNumber: '2222222',
-              price: '45.80'
+              price: '19.29',
+              validEcomData: true,
+              readyForSale: true,
+              colorIds: [
+                {
+                  colorCollectionColors: [
+                    {
+                      colorCollectionColorID: '1827162',
+                      colorTranslation: 'Pure Brilliant Red'
+                    }
+                  ]
+                }
+              ],
+              tintedOrReadyMix: 'Tinted',
+              friendlyPackSizeTranslation: '2.5L',
+              pattern: [
+                {
+                  name: 'square-print'
+                }
+              ],
+              eanCode: '22222221827162'
             },
             {
               articleNumber: '3333333',
-              price: '45.80'
+              price: '45.80',
+              validEcomData: false,
+              readyForSale: false,
+              friendlyPackSizeTranslation: '2.5L',
+              eanCode: ''
             }
           ]
         }

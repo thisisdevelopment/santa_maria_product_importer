@@ -6,7 +6,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
       products: products.map { |product| product[:basic] }
     }
 
-    stub_request(:get, "https://api/api/v2/products").to_return(
+    stub_request(:get, 'https://api/api/v2/products').to_return(
       body: response.to_json,
       status: 200
     )
@@ -100,8 +100,39 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
             },
             extended: {
               sku: [
-                { articleNumber: '9281727' },
-                { articleNumber: '1821122' }
+                {
+                  articleNumber: '9281727',
+                  price: '19.29',
+                  validEcomData: true,
+                  readyForSale: true,
+                  colorIds: [
+                    {
+                      colorCollectionColors: [
+                        {
+                          colorCollectionColorID: '1827162',
+                          colorTranslation: 'Pure Brilliant Teal'
+                        }
+                      ]
+                    }
+                  ],
+                  tintedOrReadyMix: 'Tinted',
+                  friendlyPackSizeTranslation: '5L',
+                  pattern: [
+                    {
+                      name: 'square-print'
+                    }
+                  ],
+                  eanCode: '92817271827162'
+                },
+                {
+                  articleNumber: '1821122',
+                  price: '21.39',
+                  validEcomData: true,
+                  readyForSale: true,
+                  tintedOrReadyMix: 'Not Applicable',
+                  friendlyPackSizeTranslation: '5L',
+                  eanCode: '22222221827162'
+                }
               ]
             }
           },
@@ -115,12 +146,32 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
             },
             extended: {
               sku: [
-                { articleNumber: '92817271' },
+                {
+                  articleNumber: '92817271',
+                  price: '19.20',
+                  colorIds: [
+                    {
+                      colorCollectionColors: [
+                        {
+                          colorCollectionColorID: '1827162',
+                          colorTranslation: 'Pure Brilliant Red'
+                        }
+                      ]
+                    },
+                    {
+                      colorCollectionColors: [
+                        {
+                          colorCollectionColorID: '1000001',
+                          colorTranslation: 'Pure Brilliant Green'
+                        }
+                      ]
+                    }
+                  ]
+                },
                 { articleNumber: '18211221' }
               ]
             }
           }
-
         ]
       end
 
@@ -143,8 +194,30 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
             description: 'Weathershield is super tough',
             image_url: nil,
             variants: [
-              { article_number: '9281727' },
-              { article_number: '1821122' }
+              {
+                article_number: '9281727',
+                price: '19.29',
+                valid: true,
+                on_sale: true,
+                color_id: '1827162',
+                ready_mix: false,
+                pack_size: '5L',
+                pattern: 'square-print',
+                ean: '92817271827162',
+                name: 'Pure Brilliant Teal'
+              },
+              {
+                article_number: '1821122',
+                price: '21.39',
+                valid: true,
+                on_sale: true,
+                color_id: nil,
+                ready_mix: true,
+                pack_size: '5L',
+                pattern: nil,
+                ean: '22222221827162',
+                name: nil
+              }
             ]
           },
           {
@@ -155,8 +228,21 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
             description: 'Weathershield PRO is super tough',
             image_url: nil,
             variants: [
-              { article_number: '92817271' },
-              { article_number: '18211221' }
+              {
+                article_number: '92817271',
+                price: '19.20',
+                ready_mix: true,
+                color_id: '1827162',
+                name: 'Pure Brilliant Red'
+              },
+              {
+                article_number: '92817271',
+                price: '19.20',
+                ready_mix: true,
+                color_id: '1000001',
+                name: 'Pure Brilliant Green'
+              },
+              { article_number: '18211221', ready_mix: true }
             ]
           }
         ]
