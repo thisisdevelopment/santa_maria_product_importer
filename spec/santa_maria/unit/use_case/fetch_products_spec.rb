@@ -26,6 +26,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
 
     context 'given two products and two variants each' do
       let(:products) { [] }
+
       before do
         products << double(
           global_id: '2',
@@ -98,7 +99,7 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
       end
 
       it 'exports all products first, then exports variants' do
-        subject.execute(presenter)
+        subject.execute(presenter: presenter)
 
         expect(presenter).to(
           have_received(:product)

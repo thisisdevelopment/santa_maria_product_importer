@@ -2,14 +2,13 @@ module SantaMaria
   module Gateway
     class SantaMariaLegacy
       def initialize(endpoint)
-
+        @endpoint = endpoint
       end
 
       def all_products
-        response = Net::HTTP.get_response(URI('https://api/api/products/eukdlx'))
+        response = Net::HTTP.get_response(URI("#{endpoint}api/products/eukdlx"))
 
         result = JSON.parse(response.body)
-
 
         result['products'].each do |p|
           product = SantaMaria::Domain::Product.new(self)
@@ -25,7 +24,7 @@ module SantaMaria
       end
 
       def variants_for(global_id)
-        response = Net::HTTP.get_response(URI("https://api/api/products/eukdlx/#{global_id}"))
+        response = Net::HTTP.get_response(URI("#{endpoint}api/products/eukdlx/#{global_id}"))
 
         product = JSON.parse(response.body)
 
@@ -45,6 +44,10 @@ module SantaMaria
           variant
         end
       end
+
+      private
+
+      attr_reader :endpoint
     end
   end
 end
