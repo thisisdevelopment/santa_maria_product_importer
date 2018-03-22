@@ -203,7 +203,7 @@ RSpec.describe 'santa maria' do
       include_examples 'product data'
     end
 
-    xdescribe 'v2' do
+    describe 'v2' do
       let(:product_requests) do
         product_1 = {
           sku: [

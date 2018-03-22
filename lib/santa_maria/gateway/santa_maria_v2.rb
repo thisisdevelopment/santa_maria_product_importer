@@ -2,11 +2,11 @@ module SantaMaria
   module Gateway
     class SantaMariaV2
       def initialize(endpoint)
-
+        @endpoint = endpoint
       end
 
       def all_products
-        response = Net::HTTP.get_response(URI('https://api/api/v2/products'))
+        response = Net::HTTP.get_response(URI("#{endpoint}api/v2/products"))
 
         result = JSON.parse(response.body)
 
@@ -17,7 +17,7 @@ module SantaMaria
       end
 
       def variants_for(global_id)
-        response = Net::HTTP.get_response(URI("https://api/api/v2/products/#{global_id}"))
+        response = Net::HTTP.get_response(URI("#{endpoint}api/v2/products/#{global_id}"))
 
         product = JSON.parse(response.body)
 
@@ -42,6 +42,8 @@ module SantaMaria
       end
 
       private
+
+      attr_reader :endpoint
 
       def new_product(product_data)
         product = SantaMaria::Domain::Product.new(self)
