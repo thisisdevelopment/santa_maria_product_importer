@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{This provides a consistent Ruby interface around SantaMaria APIs.}
   spec.homepage      = 'https://github.com/madetech/santa_maria-product_importer'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+  spec.files         = `ls`.split("\n").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
   spec.bindir        = 'exe'
