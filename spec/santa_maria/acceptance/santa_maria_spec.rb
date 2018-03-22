@@ -17,7 +17,7 @@ RSpec.describe 'santa maria' do
   end
 
   context 'given two products with a variant' do
-    shared_examples 'product data' do
+    shared_examples 'matches expected product data' do
       let(:spy_presenter) { SpyPresenter.new }
 
       subject do
@@ -25,10 +25,14 @@ RSpec.describe 'santa maria' do
           santa_maria: santa_maria
         )
 
-        use_case.execute(spy_presenter)
+        use_case.execute(presenter: spy_presenter)
       end
 
-      before { subject }
+      before do
+        product_requests
+        products_request
+        subject
+      end
 
       it 'is able to extract the products' do
         product_1 = spy_presenter.products[0]
@@ -88,8 +92,22 @@ RSpec.describe 'santa maria' do
       end
     end
 
+    shared_examples 'product data' do
+      context do
+        let(:endpoint) { 'https://api/' }
+
+        include_examples 'matches expected product data'
+      end
+
+      context do
+        let(:endpoint) { 'http://santamaria-api/' }
+
+        include_examples 'matches expected product data'
+      end
+    end
+
     describe 'legacy' do
-      before do
+      let(:product_requests) do
         product_1 = {
           packages: [
             {
@@ -106,12 +124,6 @@ RSpec.describe 'santa maria' do
             }
           ]
         }
-
-        stub_request(:get, 'https://api/api/products/eukdlx/192871-19291-39192-109283')
-          .to_return(
-            body: product_1.to_json,
-            status: 200
-          )
 
         product_2 = {
           packages: [
@@ -138,12 +150,23 @@ RSpec.describe 'santa maria' do
             }
           ]
         }
-        stub_request(:get, 'https://api/api/products/eukdlx/192871-19291-39192-982910')
-          .to_return(
-            body: product_2.to_json,
-            status: 200
-          )
 
+        [
+          stub_request(:get, "#{endpoint}api/products/eukdlx/192871-19291-39192-109283")
+            .to_return(
+              body: product_1.to_json,
+              status: 200
+            ),
+          stub_request(:get, "#{endpoint}api/products/eukdlx/192871-19291-39192-982910")
+            .to_return(
+              body: product_2.to_json,
+              status: 200
+            ),
+
+        ]
+      end
+
+      let(:products_request) do
         response = {
           products: [
             {
@@ -166,7 +189,7 @@ RSpec.describe 'santa maria' do
           ]
         }
 
-        stub_request(:get, 'https://api/api/products/eukdlx')
+        stub_request(:get, "#{endpoint}api/products/eukdlx")
           .to_return(
             body: response.to_json,
             status: 200
@@ -174,13 +197,14 @@ RSpec.describe 'santa maria' do
       end
 
       let(:santa_maria) do
-        SantaMaria::Gateway::SantaMariaLegacy.new('https://api/')
+        SantaMaria::Gateway::SantaMariaLegacy.new(endpoint)
       end
+
       include_examples 'product data'
     end
 
     describe 'v2' do
-      before do
+      let(:product_requests) do
         product_1 = {
           sku: [
             {
@@ -204,12 +228,6 @@ RSpec.describe 'santa maria' do
             }
           ]
         }
-
-        stub_request(:get, 'https://api/api/v2/products/192871-19291-39192-109283')
-          .to_return(
-            body: product_1.to_json,
-            status: 200
-          )
 
         product_2 = {
           sku: [
@@ -247,12 +265,22 @@ RSpec.describe 'santa maria' do
             }
           ]
         }
-        stub_request(:get, 'https://api/api/v2/products/192871-19291-39192-982910')
-          .to_return(
-            body: product_2.to_json,
-            status: 200
-          )
 
+        [
+          stub_request(:get, "#{endpoint}api/v2/products/192871-19291-39192-109283")
+            .to_return(
+              body: product_1.to_json,
+              status: 200
+            ),
+          stub_request(:get, "#{endpoint}api/v2/products/192871-19291-39192-982910")
+            .to_return(
+              body: product_2.to_json,
+              status: 200
+            )
+        ]
+      end
+
+      let(:products_request) do
         response = {
           products: [
             {
@@ -277,7 +305,7 @@ RSpec.describe 'santa maria' do
           ]
         }
 
-        stub_request(:get, 'https://api/api/v2/products')
+        stub_request(:get, "#{endpoint}api/v2/products")
           .to_return(
             body: response.to_json,
             status: 200
@@ -285,7 +313,7 @@ RSpec.describe 'santa maria' do
       end
 
       let(:santa_maria) do
-        SantaMaria::Gateway::SantaMariaV2.new('https://api/')
+        SantaMaria::Gateway::SantaMariaV2.new(endpoint)
       end
 
       include_examples 'product data'

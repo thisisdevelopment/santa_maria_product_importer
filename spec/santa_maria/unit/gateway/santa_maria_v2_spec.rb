@@ -1,12 +1,13 @@
 RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
-  let(:gateway) { described_class.new('https://api/') }
+  let(:endpoint) { "http://api-aroo/"}
+  let(:gateway) { described_class.new(endpoint) }
 
   before do
     response = {
       products: products.map { |product| product[:basic] }
     }
 
-    stub_request(:get, 'https://api/api/v2/products').to_return(
+    stub_request(:get, "#{endpoint}api/v2/products").to_return(
       body: response.to_json,
       status: 200
     )
@@ -27,7 +28,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
           global_id = product[:basic][:globalId]
           product = product[:basic].merge(product[:extended])
 
-          stub_request(:get, "https://api/api/v2/products/#{global_id}").to_return(
+          stub_request(:get, "#{endpoint}api/v2/products/#{global_id}").to_return(
             body: product.to_json,
             status: 200
           )
@@ -247,8 +248,17 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
           }
         ]
       end
+      context 'example 1' do
+        let(:endpoint) {'http://api-santamaria'}
 
-      it_behaves_like 'santa maria gateway'
+        it_behaves_like 'santa maria gateway'
+      end
+
+      context 'example 2' do
+        let(:endpoint) {'http://api'}
+
+        it_behaves_like 'santa maria gateway'
+      end
     end
   end
 end

@@ -1,33 +1,33 @@
 RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
-  let(:gateway) { described_class.new('https://api/') }
-
-  before do
-    response = {
-      products: products.map { |product| product[:basic] }
-    }
-
-    stub_request(:get, "https://api/api/products/eukdlx").to_return(
-      body: response.to_json,
-      status: 200
-    )
-  end
-
-  context 'given no products' do
-    let(:products) { [] }
-
-    it 'yields no products' do
-      expect { |block| gateway.all_products(&block) }.not_to yield_control
-    end
-  end
-
   context 'given a product with an id' do
-    shared_examples 'santa maria gateway' do
+    shared_examples 'santa maria gateway assertions' do
+      let(:gateway) { described_class.new(endpoint) }
+
+      before do
+        response = {
+          products: products.map { |product| product[:basic] }
+        }
+
+        stub_request(:get, "#{endpoint}api/products/eukdlx").to_return(
+          body: response.to_json,
+          status: 200
+        )
+      end
+
+      context 'given no products' do
+        let(:products) { [] }
+
+        it 'yields no products' do
+          expect { |block| gateway.all_products(&block) }.not_to yield_control
+        end
+      end
+
       let(:stub_product_get_requests) do
         products.map do |product|
           global_id = product[:basic][:globalId]
           product = product[:basic].merge(product[:extended])
 
-          stub_request(:get, "https://api/api/products/eukdlx/#{global_id}").to_return(
+          stub_request(:get, "#{endpoint}api/products/eukdlx/#{global_id}").to_return(
             body: product.to_json,
             status: 200
           )
@@ -51,14 +51,18 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
 
         it 'does not request product detail from remote service' do
           gateway.all_products { |_| }
-          expect(stub_product_get).not_to have_been_requested
+
+          expect(a_request(:get, %r[#{endpoint}api/products/eukdlx/.+])).not_to have_been_requested
         end
       end
 
       context 'when product variants are accessed' do
         it 'requests product detail from remote service' do
           gateway.all_products { |product| product.variants }
-          expect(stub_product_get).to have_been_requested
+
+          stub_product_get_requests.each do |request|
+            expect(request).to have_been_requested
+          end
         end
 
         it 'should yield a product with the correct variants' do
@@ -70,6 +74,20 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
             yield_successive_args(*expected)
           )
         end
+      end
+    end
+
+    shared_examples 'santa maria gateway' do
+      context do
+        let(:endpoint) { 'https://api/' }
+
+        include_examples 'santa maria gateway assertions'
+      end
+
+      context do
+        let(:endpoint) { 'https://abd/' }
+
+        include_examples 'santa maria gateway assertions'
       end
     end
 

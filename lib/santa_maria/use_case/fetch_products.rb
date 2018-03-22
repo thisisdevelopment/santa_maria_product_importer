@@ -5,7 +5,7 @@ module SantaMaria
         @santa_maria = santa_maria
       end
 
-      def execute(presenter)
+      def execute(presenter:)
         products = []
         santa_maria.all_products do |product|
           presenter.product(
