@@ -100,7 +100,7 @@ RSpec.describe 'santa maria' do
       end
 
       context do
-        let(:endpoint) { 'http://santamaria-api/' }
+        let(:endpoint) { 'https://santamaria-api/' }
 
         include_examples 'matches expected product data'
       end
@@ -306,6 +306,14 @@ RSpec.describe 'santa maria' do
         }
 
         stub_request(:get, "#{endpoint}api/v2/products")
+          .with(
+            headers: {
+              'Accept-Language' => 'en',
+              'Channel' => 'flourishweb',
+              'Domaincode' => 'eukdlx',
+              'X-Api-Token' => 'xxxx'
+            }
+          )
           .to_return(
             body: response.to_json,
             status: 200

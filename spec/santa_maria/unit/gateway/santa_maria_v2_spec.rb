@@ -1,5 +1,5 @@
 RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
-  let(:endpoint) { "http://api-aroo/"}
+  let(:endpoint) { "https://api-aroo/"}
   let(:gateway) { described_class.new(endpoint) }
 
   before do
@@ -7,7 +7,16 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
       products: products.map { |product| product[:basic] }
     }
 
-    stub_request(:get, "#{endpoint}api/v2/products").to_return(
+    stub_request(:get, "#{endpoint}api/v2/products")
+    .with(
+      headers: {
+        'Accept-Language' => 'en',
+        'Channel' => 'flourishweb',
+        'Domaincode' => 'eukdlx',
+        'X-Api-Token' => 'xxxx'
+      }
+    )
+    .to_return(
       body: response.to_json,
       status: 200
     )
@@ -249,13 +258,13 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         ]
       end
       context 'example 1' do
-        let(:endpoint) {'http://api-santamaria'}
+        let(:endpoint) {'https://api-santamaria'}
 
         it_behaves_like 'santa maria gateway'
       end
 
       context 'example 2' do
-        let(:endpoint) {'http://api'}
+        let(:endpoint) {'https://api'}
 
         it_behaves_like 'santa maria gateway'
       end
