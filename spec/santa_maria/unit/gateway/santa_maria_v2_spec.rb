@@ -1,6 +1,8 @@
 RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
   let(:endpoint) { "https://api-aroo/"}
-  let(:gateway) { described_class.new(endpoint) }
+  let(:domaincode) { 'eukdlx' }
+  let(:language) { 'en' }
+  let(:gateway) { described_class.new(endpoint, domaincode, language) }
   let(:token) { 'somefaketoken' }
 
   before do
@@ -13,9 +15,9 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
     stub_request(:get, "#{endpoint}api/v2/products")
     .with(
       headers: {
-        'Accept-Language' => 'en',
+        'Accept-Language' => language,
         'Channel' => 'flourishweb',
-        'Domaincode' => 'eukdlx',
+        'Domaincode' => domaincode,
         'X-Api-Key' => token
       }
     )
@@ -40,7 +42,14 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
           global_id = product[:basic][:globalId]
           product = product[:basic].merge(product[:extended])
 
-          stub_request(:get, "#{endpoint}api/v2/products/#{global_id}").to_return(
+          stub_request(:get, "#{endpoint}api/v2/products/#{global_id}").with(
+            headers: {
+              'Accept-Language' => language,
+              'Channel' => 'flourishweb',
+              'Domaincode' => domaincode,
+              'X-Api-Key' => token
+            }
+          ).to_return(
             body: product.to_json,
             status: 200
           )
@@ -262,12 +271,16 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
       end
       context 'example 1' do
         let(:endpoint) {'https://api-santamaria'}
+        let(:domaincode) { 'eukdlx' }
+        let(:language) { 'en' }
 
         it_behaves_like 'santa maria gateway'
       end
 
       context 'example 2' do
         let(:endpoint) {'https://api'}
+        let(:domaincode) { 'ebelev' }
+        let(:language) { 'nl' }
 
         it_behaves_like 'santa maria gateway'
       end

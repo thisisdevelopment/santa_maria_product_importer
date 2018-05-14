@@ -4,23 +4,16 @@ require 'net/http'
 module SantaMaria
   module Gateway
     class SantaMariaV2
-      def initialize(endpoint)
+      def initialize(endpoint, domaincode, language)
         @endpoint = endpoint
+        @domaincode = domaincode
+        @language = language
       end
 
       def all_products
         uri = URI("#{endpoint}api/v2/products")
-        request = Net::HTTP::Get.new(uri)
-        request['X-Api-Key'] = ENV['SANTA_MARIA_X_API_TOKEN']
-        request['accept-language'] = 'en'
-        request['content-type'] = 'application/json'
-        request['channel'] = 'flourishweb'
-        request['domaincode'] = 'eukdlx'
-        # request['host'] = "api-preprod.deco-columbus.com"
 
-        result = Net::HTTP.start(uri.hostname, 443, use_ssl: true) do |http|
-          JSON.parse(http.request(request).body)
-        end
+        result = get(uri)
 
         result['products'].each do |product|
           yield new_product(product)
@@ -28,9 +21,9 @@ module SantaMaria
       end
 
       def variants_for(global_id)
-        response = Net::HTTP.get_response(URI("#{endpoint}api/v2/products/#{global_id}"))
+        uri = URI("#{endpoint}api/v2/products/#{global_id}")
 
-        product = JSON.parse(response.body)
+        product = get(uri)
 
         variants = []
 
@@ -54,7 +47,20 @@ module SantaMaria
 
       private
 
-      attr_reader :endpoint
+      attr_reader :endpoint, :domaincode, :language
+
+      def get(uri)
+        request = Net::HTTP::Get.new(uri)
+        request['X-Api-Key'] = ENV['SANTA_MARIA_X_API_TOKEN']
+        request['accept-language'] = language
+        request['content-type'] = 'application/json'
+        request['channel'] = 'flourishweb'
+        request['domaincode'] = domaincode
+
+        Net::HTTP.start(uri.hostname, 443, use_ssl: true) do |http|
+          JSON.parse(http.request(request).body)
+        end
+      end
 
       def new_product(product_data)
         product = SantaMaria::Domain::Product.new(self)

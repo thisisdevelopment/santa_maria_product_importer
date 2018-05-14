@@ -314,9 +314,9 @@ RSpec.describe 'santa maria' do
       stub_request(:get, "#{endpoint}api/v2/products")
         .with(
           headers: {
-            'Accept-Language' => 'en',
+            'Accept-Language' => language,
             'Channel' => 'flourishweb',
-            'Domaincode' => 'eukdlx',
+            'Domaincode' => domaincode,
             'X-Api-Key' => token
           }
         )
@@ -326,8 +326,11 @@ RSpec.describe 'santa maria' do
         )
       end
 
+
+      let(:domaincode) { 'ebelev' }
+      let(:language) { 'nl' }
       let(:santa_maria) do
-        SantaMaria::Gateway::SantaMariaV2.new(endpoint)
+        SantaMaria::Gateway::SantaMariaV2.new(endpoint, domaincode, language)
       end
 
       include_examples 'product data'
