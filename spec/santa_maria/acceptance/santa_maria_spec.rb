@@ -17,6 +17,12 @@ RSpec.describe 'santa maria' do
   end
 
   context 'given two products with a variant' do
+    let(:token) { 'sometoken '}
+
+    before do
+      ENV['SANTA_MARIA_X_API_TOKEN'] = token
+    end
+
     shared_examples 'matches expected product data' do
       let(:spy_presenter) { SpyPresenter.new }
 
@@ -100,7 +106,7 @@ RSpec.describe 'santa maria' do
       end
 
       context do
-        let(:endpoint) { 'http://santamaria-api/' }
+        let(:endpoint) { 'https://santamaria-api/' }
 
         include_examples 'matches expected product data'
       end
@@ -305,11 +311,19 @@ RSpec.describe 'santa maria' do
           ]
         }
 
-        stub_request(:get, "#{endpoint}api/v2/products")
-          .to_return(
-            body: response.to_json,
-            status: 200
-          )
+      stub_request(:get, "#{endpoint}api/v2/products")
+        .with(
+          headers: {
+            'Accept-Language' => 'en',
+            'Channel' => 'flourishweb',
+            'Domaincode' => 'eukdlx',
+            'X-Api-Key' => token
+          }
+        )
+        .to_return(
+          body: response.to_json,
+          status: 200
+        )
       end
 
       let(:santa_maria) do

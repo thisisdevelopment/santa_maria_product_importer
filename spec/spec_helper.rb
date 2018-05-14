@@ -4,6 +4,7 @@ require "santa_maria/domain/variant"
 require "santa_maria/domain/product"
 require "santa_maria/gateway/santa_maria_v2"
 require "santa_maria/gateway/santa_maria_legacy"
+require "santa_maria/presenter/in_memory"
 require 'webmock/rspec'
 
 RSpec.configure do |config|

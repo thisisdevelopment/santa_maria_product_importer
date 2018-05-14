@@ -1,3 +1,6 @@
+require 'json'
+require 'net/http'
+
 module SantaMaria
   module Gateway
     class SantaMariaV2
@@ -6,10 +9,18 @@ module SantaMaria
       end
 
       def all_products
-        response = Net::HTTP.get_response(URI("#{endpoint}api/v2/products"))
+        uri = URI("#{endpoint}api/v2/products")
+        request = Net::HTTP::Get.new(uri)
+        request['X-Api-Key'] = ENV['SANTA_MARIA_X_API_TOKEN']
+        request['accept-language'] = 'en'
+        request['content-type'] = 'application/json'
+        request['channel'] = 'flourishweb'
+        request['domaincode'] = 'eukdlx'
+        # request['host'] = "api-preprod.deco-columbus.com"
 
-        result = JSON.parse(response.body)
-
+        result = Net::HTTP.start(uri.hostname, 443, use_ssl: true) do |http|
+          JSON.parse(http.request(request).body)
+        end
 
         result['products'].each do |product|
           yield new_product(product)

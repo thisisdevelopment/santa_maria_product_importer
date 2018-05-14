@@ -7,6 +7,7 @@ module SantaMaria
 
       def execute(presenter:)
         products = []
+
         santa_maria.all_products do |product|
           presenter.product(
             id: product.global_id,
@@ -16,6 +17,7 @@ module SantaMaria
             description: product.description,
             image_url: product.image_url
           )
+
           products << product
         end
 
