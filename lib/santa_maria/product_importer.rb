@@ -1,4 +1,5 @@
 require "santa_maria/use_case/fetch_products"
+require "santa_maria/use_case/fetch_colors"
 require "santa_maria/domain/color"
 require "santa_maria/domain/variant"
 require "santa_maria/domain/product"
