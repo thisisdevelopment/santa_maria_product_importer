@@ -10,11 +10,44 @@ RSpec.describe SantaMaria::Presenter::InMemory do
     }
   end
 
+  let(:variant_data) do
+    {
+      id: 1,
+      article_number: '1234',
+      price: '2.99',
+      valid: true,
+      on_sale: false,
+      color_id: '5678',
+      ready_mix: true,
+      pack_size: 'm',
+      pattern: '',
+      ean: '9900990099',
+      name: 'Red'
+    }
+  end
+
   describe '#product' do
-    it { is_expected.to respond_to(:product) }
+    before do
+      subject.product(product_data)
+    end
+
+    it 'sets variants to empty array when no variant presenter method called' do
+      expect(subject.products[0][:variants]).to eq([])
+    end
+
+    it 'keeps products in the memory' do
+      expect(subject.products).to eq([product_data.merge(variants: [])])
+    end
   end
 
   describe '#variant' do
-    it { is_expected.to respond_to(:variant) }
+    it 'assigns the variant underneath its product' do
+      subject.product(product_data)
+      subject.variant(variant_data)
+
+      variant_data_without_id = variant_data.tap { |h| h.delete(:id) }
+
+      expect(subject.products[0][:variants]).to eq([variant_data_without_id])
+    end
   end
 end
