@@ -45,6 +45,13 @@ module SantaMaria
         variants
       end
 
+      def all_colors
+        response_colors = get(URI("#{endpoint}api/v2/colors"))['colors']
+        response_colors.map do |response_color|
+          new_color(response_color)
+        end
+      end
+
       private
 
       attr_reader :endpoint, :domaincode, :language
@@ -84,6 +91,13 @@ module SantaMaria
         variant.on_sale = sku['readyForSale']
         variant.ready_mix = !sku['tintedOrReadyMix'].eql?('Tinted')
         variant
+      end
+
+      def new_color(color_data)
+        color = SantaMaria::Domain::Color.new
+        color.color_id = color_data['colorId']
+        color.rgb = color_data['rgb']
+        color
       end
     end
   end

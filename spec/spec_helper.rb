@@ -1,10 +1,5 @@
 require "bundler/setup"
-require "santa_maria/use_case/fetch_products"
-require "santa_maria/domain/variant"
-require "santa_maria/domain/product"
-require "santa_maria/gateway/santa_maria_v2"
-require "santa_maria/gateway/santa_maria_legacy"
-require "santa_maria/presenter/in_memory"
+require "santa_maria/product_importer"
 require 'webmock/rspec'
 
 RSpec.configure do |config|
@@ -16,6 +11,13 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+end
+
+RSpec::Matchers.define :a_color do |expected_color|
+  match do |color|
+    expected_color[:color_id] == color.color_id &&
+      expected_color[:rgb] == color.rgb
   end
 end
 
