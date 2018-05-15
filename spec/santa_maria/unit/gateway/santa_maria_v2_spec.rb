@@ -4,6 +4,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
   let(:language) { 'en' }
   let(:gateway) { described_class.new(endpoint, domaincode, language) }
   let(:token) { 'somefaketoken' }
+  let(:products) { [] }
 
   before do
     response = {
@@ -283,6 +284,72 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
         let(:language) { 'nl' }
 
         it_behaves_like 'santa maria gateway'
+      end
+    end
+  end
+
+  context 'color api' do
+    before do
+      response = {
+        colors: api_colors_response
+      }
+
+      stub_request(:get, "#{endpoint}api/v2/colors").with(
+        headers: {
+          'Accept-Language' => language,
+          'Channel' => 'flourishweb',
+          'Domaincode' => domaincode,
+          'X-Api-Key' => token
+        }
+      ).to_return(
+        body: response.to_json,
+        status: 200
+      )
+    end
+
+    context 'no colors' do
+      let(:api_colors_response) { [] }
+
+      it 'returns an empty array' do
+        expect(gateway.all_colors).to eq([])
+      end
+    end
+
+    context 'two colors' do
+      let(:api_colors_response) do
+        [
+          {
+            colorId: "1032530",
+            rgb: "B1AFB1",
+          },
+          {
+            colorId: "1032534",
+            rgb: "A1AD62"
+          }
+        ]
+      end
+
+      let(:expected_colors) do
+        [
+          {
+            color_id: "1032530",
+            rgb: "B1AFB1",
+          },
+          {
+            color_id: "1032534",
+            rgb: "A1AD62"
+          }
+        ]
+      end
+
+      it 'returns all colors' do
+        expected = expected_colors.map do |expected_color|
+          a_color(expected_color)
+        end
+
+        expect { |block| gateway.all_colors.each(&block) }.to (
+          yield_successive_args(*expected)
+        )
       end
     end
   end
