@@ -47,9 +47,11 @@ module SantaMaria
 
       def all_colors
         response_colors = get(URI("#{endpoint}api/v2/colors"))['colors']
-        response_colors.map do |response_color|
-          new_color(response_color)
-        end
+        response_colors.map do |global_color|
+          global_color['colorCollections'].map do |color_collection|
+            new_color(global_color['rgb'], color_collection['colorCollectionColorId'])
+          end
+        end.flatten
       end
 
       private
@@ -93,10 +95,10 @@ module SantaMaria
         variant
       end
 
-      def new_color(color_data)
+      def new_color(rgb, color_collection_color_id)
         color = SantaMaria::Domain::Color.new
-        color.color_id = color_data['colorId']
-        color.rgb = color_data['rgb']
+        color.color_id = color_collection_color_id
+        color.rgb = rgb
         color
       end
     end
