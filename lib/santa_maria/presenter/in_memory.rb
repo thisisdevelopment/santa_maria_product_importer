@@ -1,10 +1,11 @@
 module SantaMaria
   module Presenter
     class InMemory
-      attr_accessor :products
+      attr_accessor :products, :colors
 
       def initialize
         @products = []
+        @colors = []
       end
 
       def product(id:, type:, name:, uri_name:, description:, image_url:)
@@ -42,6 +43,13 @@ module SantaMaria
         product[:variants] << variant
 
         variant
+      end
+
+      def color(id:, rgb:)
+        colors << {
+          id: id,
+          rgb: rgb
+        }
       end
     end
   end

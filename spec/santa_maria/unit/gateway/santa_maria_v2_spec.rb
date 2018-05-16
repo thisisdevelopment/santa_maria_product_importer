@@ -315,16 +315,33 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
       end
     end
 
-    context 'two colors' do
+    context 'two global colors, each with two color collection ids each' do
       let(:api_colors_response) do
         [
           {
-            colorId: "1032530",
+            colorId: "10",
             rgb: "B1AFB1",
+            colorCollections: [
+              {
+                colorCollectionColorId: "1032530",
+              },
+              {
+                colorCollectionColorId: "2032550"
+              }
+            ]
           },
           {
             colorId: "1032534",
-            rgb: "A1AD62"
+            rgb: "A1AD62",
+            colorCollections: [
+              {
+                colorCollectionColorId: "3032510",
+              },
+              {
+                colorCollectionColorId: "4032520"
+              }
+            ]
+
           }
         ]
       end
@@ -336,13 +353,21 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
             rgb: "B1AFB1",
           },
           {
-            color_id: "1032534",
+            color_id: "2032550",
+            rgb: "B1AFB1"
+          },
+          {
+            color_id: "3032510",
+            rgb: "A1AD62"
+          },
+          {
+            color_id: "4032520",
             rgb: "A1AD62"
           }
         ]
       end
 
-      it 'returns all colors' do
+      it 'flattens each color collection color id with its rgb value' do
         expected = expected_colors.map do |expected_color|
           a_color(expected_color)
         end

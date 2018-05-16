@@ -50,4 +50,22 @@ RSpec.describe SantaMaria::Presenter::InMemory do
       expect(subject.products[0][:variants]).to eq([variant_data_without_id])
     end
   end
+
+  describe '#colors' do
+    it 'defaults to empty array' do
+      expect(subject.colors).to eq([])
+    end
+
+    let(:color) do
+      {
+        id: '123456',
+        rgb: 'FFEEDD'
+      }
+    end
+
+    it 'appends a color to the colors array' do
+      subject.color(color)
+      expect(subject.colors).to eq([color])
+    end
+  end
 end
