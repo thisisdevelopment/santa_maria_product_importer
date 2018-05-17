@@ -184,8 +184,12 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
                     {
                       colorCollectionColors: [
                         {
-                          colorCollectionColorID: '1000001',
-                          colorTranslation: 'Pure Brilliant Green'
+                          colorCollectionColorID: '1186982',
+                          colorTranslation: 'NORDIC SAILS 2'
+                        },
+                        {
+                          colorCollectionColorID: '1811241',
+                          colorTranslation: 'Heart Wood'
                         }
                       ]
                     }
@@ -262,8 +266,15 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
                 article_number: '92817271',
                 price: '19.20',
                 ready_mix: true,
-                color_id: '1000001',
-                name: 'Pure Brilliant Green'
+                color_id: '1186982',
+                name: 'NORDIC SAILS 2'
+              },
+              {
+                article_number: '92817271',
+                price: '19.20',
+                ready_mix: true,
+                color_id: '1811241',
+                name: 'Heart Wood'
               },
               { article_number: '18211221', ready_mix: true }
             ]
