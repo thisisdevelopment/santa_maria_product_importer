@@ -32,12 +32,14 @@ module SantaMaria
             variants << new_variant(sku)
           else
             sku['colorIds'].each do |color|
-              variant = new_variant(sku)
 
-              variant.name = color.dig('colorCollectionColors', 0, 'colorTranslation')
-              variant.color_id = color.dig('colorCollectionColors', 0, 'colorCollectionColorID')
+              color['colorCollectionColors'].each do |color_collection_color|
+                variant = new_variant(sku)
+                variant.name = color_collection_color['colorTranslation']
+                variant.color_id = color_collection_color['colorCollectionColorID']
+                variants << variant
+              end
 
-              variants << variant
             end
           end
         end
