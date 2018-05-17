@@ -126,8 +126,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
                 {
                   articleNumber: '9281727',
                   price: '19.29',
-                  validEcomData: true,
-                  readyForSale: true,
+                  validEcomData: 'true',
+                  readyForSale: 'true',
                   colorIds: [
                     {
                       colorCollectionColors: [
@@ -150,8 +150,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
                 {
                   articleNumber: '1821122',
                   price: '21.39',
-                  validEcomData: true,
-                  readyForSale: true,
+                  validEcomData: 'true',
+                  readyForSale: 'true',
                   tintedOrReadyMix: 'Not Applicable',
                   friendlyPackSizeTranslation: '5L',
                   eanCode: '22222221827162'

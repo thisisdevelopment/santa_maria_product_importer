@@ -216,8 +216,8 @@ RSpec.describe 'santa maria' do
             {
               articleNumber: '1111111',
               price: '45.80',
-              validEcomData: true,
-              readyForSale: true,
+              validEcomData: 'true',
+              readyForSale: 'true',
               colorIds: [
                 {
                   colorCollectionColors: [
@@ -240,8 +240,8 @@ RSpec.describe 'santa maria' do
             {
               articleNumber: '2222222',
               price: '19.29',
-              validEcomData: true,
-              readyForSale: true,
+              validEcomData: 'true',
+              readyForSale: 'true',
               colorIds: [
                 {
                   colorCollectionColors: [
@@ -264,8 +264,8 @@ RSpec.describe 'santa maria' do
             {
               articleNumber: '3333333',
               price: '45.80',
-              validEcomData: false,
-              readyForSale: false,
+              validEcomData: 'false',
+              readyForSale: 'false',
               friendlyPackSizeTranslation: '2.5L',
               eanCode: ''
             }

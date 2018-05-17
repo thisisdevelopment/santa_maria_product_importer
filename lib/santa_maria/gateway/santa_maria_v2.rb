@@ -89,8 +89,8 @@ module SantaMaria
         variant.pack_size = sku['friendlyPackSizeTranslation']
         variant.pattern = sku.dig('pattern', 0, 'name')
         variant.ean = sku['eanCode']
-        variant.valid = sku['validEcomData']
-        variant.on_sale = sku['readyForSale']
+        variant.valid = sku['validEcomData'] == 'true' unless sku['validEcomData'].nil?
+        variant.on_sale = sku['readyForSale'] == 'true' unless sku['readyForSale'].nil?
         variant.ready_mix = !sku['tintedOrReadyMix'].eql?('Tinted')
         variant
       end
