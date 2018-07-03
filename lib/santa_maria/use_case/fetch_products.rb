@@ -34,7 +34,8 @@ module SantaMaria
               pack_size: variant.pack_size,
               pattern: variant.pattern == '' ? nil : variant.pattern,
               ean: variant.ean == '' ? nil : variant.ean,
-              name: variant.name
+              name: variant.name,
+              version: variant.version
             )
           end
         end

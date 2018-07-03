@@ -45,7 +45,8 @@ RSpec::Matchers.define :a_product_with_variants do |expected_variants|
         variant.pack_size == expected_variants[i][:pack_size] &&
         variant.pattern == expected_variants[i][:pattern] &&
         variant.ean == expected_variants[i][:ean] &&
-        variant.name == expected_variants[i][:name]
+        variant.name == expected_variants[i][:name] &&
+        variant.version == expected_variants[i][:version]
     end
 
     !matches.include?(false)

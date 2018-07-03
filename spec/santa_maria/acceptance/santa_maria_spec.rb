@@ -16,6 +16,12 @@ RSpec.describe 'santa maria' do
     end
   end
 
+  def fetch_products
+    product_requests
+    products_request
+    subject
+  end
+
   context 'given two products with a variant' do
     let(:token) { 'sometoken '}
 
@@ -34,11 +40,7 @@ RSpec.describe 'santa maria' do
         use_case.execute(presenter: spy_presenter)
       end
 
-      before do
-        product_requests
-        products_request
-        subject
-      end
+      before { fetch_products }
 
       it 'is able to extract the products' do
         product_1 = spy_presenter.products[0]
@@ -69,6 +71,7 @@ RSpec.describe 'santa maria' do
         expect(variant_1[:pattern]).to be_nil
         expect(variant_1[:ean]).to eq('11111112981722')
         expect(variant_1[:name]).to eq('Radioactive Orange')
+        expect(variant_1[:version]).to eq(expected_version)
 
         variant_2 = spy_presenter.variants[1]
         expect(variant_2[:id]).to eq('192871-19291-39192-982910')
@@ -82,6 +85,7 @@ RSpec.describe 'santa maria' do
         expect(variant_2[:pattern]).to eq('square-print')
         expect(variant_2[:ean]).to eq('22222221827162')
         expect(variant_2[:name]).to eq('Pure Brilliant Red')
+        expect(variant_2[:version]).to eq(expected_version)
 
         variant_3 = spy_presenter.variants[2]
         expect(variant_3[:id]).to eq('192871-19291-39192-982910')
@@ -95,6 +99,7 @@ RSpec.describe 'santa maria' do
         expect(variant_3[:pattern]).to be_nil
         expect(variant_3[:ean]).to be_nil
         expect(variant_3[:name]).to be_nil
+        expect(variant_3[:version]).to eq(expected_version)
       end
     end
 
@@ -113,6 +118,7 @@ RSpec.describe 'santa maria' do
     end
 
     describe 'legacy' do
+      let(:expected_version) { '0' }
       let(:product_requests) do
         product_1 = {
           packages: [
@@ -210,6 +216,7 @@ RSpec.describe 'santa maria' do
     end
 
     describe 'v2' do
+      let(:expected_version) { '2' }
       let(:product_requests) do
         product_1 = {
           sku: [
@@ -252,6 +259,7 @@ RSpec.describe 'santa maria' do
                   ]
                 }
               ],
+              genericTintingId: '1234567',
               tintedOrReadyMix: 'Tinted',
               friendlyPackSizeTranslation: '2.5L',
               pattern: [

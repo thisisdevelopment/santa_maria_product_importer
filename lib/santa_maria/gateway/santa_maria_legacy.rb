@@ -40,6 +40,7 @@ module SantaMaria
           variant.valid = package['validEcomData']
           variant.on_sale = package['readyForSale']
           variant.ready_mix = !package['tintedOrReadyMix'].eql?('Tinted')
+          variant.version = '0'
 
           variant
         end

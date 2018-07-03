@@ -94,6 +94,7 @@ module SantaMaria
         variant.valid = sku['validEcomData'] == 'true' unless sku['validEcomData'].nil?
         variant.on_sale = sku['readyForSale'] == 'true' unless sku['readyForSale'].nil?
         variant.ready_mix = !sku['tintedOrReadyMix'].eql?('Tinted')
+        variant.version = '2'
         variant
       end
 

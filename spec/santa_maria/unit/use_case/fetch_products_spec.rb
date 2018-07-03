@@ -46,7 +46,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pack_size: '5L',
               pattern: '',
               ean: 'ANEAN',
-              name: 'Green'
+              name: 'Green',
+              version: '2'
             ),
             double(
               article_number: '182356',
@@ -58,7 +59,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pack_size: '2.5L',
               pattern: 'weather-stripes',
               ean: '1928172376162',
-              name: 'Teal'
+              name: 'Teal',
+              version: '2'
             ),
           ]
         )
@@ -80,7 +82,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pack_size: '2.5L',
               pattern: 'weather-stripes',
               ean: '1928172376162',
-              name: 'Orange'
+              name: 'Orange',
+              version: '3'
             ),
             double(
               article_number: '192811',
@@ -92,7 +95,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pack_size: '5L',
               pattern: nil,
               ean: '',
-              name: 'Red'
+              name: 'Red',
+              version: '3'
             ),
           ]
         )
@@ -137,7 +141,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pack_size: '5L',
               pattern: nil,
               ean: 'ANEAN',
-              name: 'Green'
+              name: 'Green',
+              version: '2'
             ).ordered
         )
         expect(presenter).to(
@@ -153,7 +158,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pack_size: '2.5L',
               pattern: 'weather-stripes',
               ean: '1928172376162',
-              name: 'Teal'
+              name: 'Teal',
+              version: '2'
             ).ordered
         )
         expect(presenter).to(
@@ -169,7 +175,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pack_size: '2.5L',
               pattern: 'weather-stripes',
               ean: '1928172376162',
-              name: 'Orange'
+              name: 'Orange',
+              version: '3'
             ).ordered
         )
         expect(presenter).to(
@@ -185,7 +192,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pack_size: '5L',
               pattern: nil,
               ean: nil,
-              name: 'Red'
+              name: 'Red',
+              version: '3'
             ).ordered
         )
       end

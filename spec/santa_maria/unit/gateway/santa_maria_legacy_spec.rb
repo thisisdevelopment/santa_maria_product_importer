@@ -216,7 +216,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
                 pack_size: '5L',
                 pattern: 'square-print',
                 ean: '92817271827162',
-                name: 'Pure Brilliant Teal'
+                name: 'Pure Brilliant Teal',
+                version: '0'
               },
               {
                 article_number: '1821122',
@@ -228,7 +229,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
                 pack_size: '2.5L',
                 pattern: 'triangle-print',
                 ean: '1010101010101010',
-                name: 'Pure Brilliant Green'
+                name: 'Pure Brilliant Green',
+                version: '0'
               }
             ]
           },
@@ -250,7 +252,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
                 pack_size: '5L',
                 pattern: 'square-print',
                 ean: '92817271827162',
-                name: 'Pure Brilliant Teal'
+                name: 'Pure Brilliant Teal',
+                version: '0'
               },
               {
                 article_number: '18211221',
@@ -262,7 +265,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
                 pack_size: '5L',
                 pattern: 'square-print',
                 ean: '92817271827162',
-                name: 'Pure Brilliant Teal'
+                name: 'Pure Brilliant Teal',
+                version: '0'
               }
             ]
           }
