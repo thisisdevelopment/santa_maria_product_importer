@@ -217,7 +217,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
                 pattern: 'square-print',
                 ean: '92817271827162',
                 name: 'Pure Brilliant Teal',
-                version: '0'
+                version: '0',
+                tinting_id: nil
               },
               {
                 article_number: '1821122',
@@ -230,7 +231,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
                 pattern: 'triangle-print',
                 ean: '1010101010101010',
                 name: 'Pure Brilliant Green',
-                version: '0'
+                version: '0',
+                tinting_id: nil
               }
             ]
           },
@@ -253,7 +255,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
                 pattern: 'square-print',
                 ean: '92817271827162',
                 name: 'Pure Brilliant Teal',
-                version: '0'
+                version: '0',
+                tinting_id: nil
               },
               {
                 article_number: '18211221',
@@ -266,7 +269,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
                 pattern: 'square-print',
                 ean: '92817271827162',
                 name: 'Pure Brilliant Teal',
-                version: '0'
+                version: '0',
+                tinting_id: nil
               }
             ]
           }

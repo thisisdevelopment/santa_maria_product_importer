@@ -213,6 +213,24 @@ RSpec.describe 'santa maria' do
       end
 
       include_examples 'product data'
+
+      context 'tinting id' do
+        let(:endpoint) { 'https://api' }
+
+        it 'contains a nil for all products' do
+          spy_presenter = SpyPresenter.new
+          use_case = SantaMaria::UseCase::FetchProducts.new(
+            santa_maria: santa_maria
+          )
+
+          fetch_products 
+          use_case.execute(presenter: spy_presenter)
+
+          expect(spy_presenter.variants[0][:tinting_id]).to be_nil
+          expect(spy_presenter.variants[1][:tinting_id]).to be_nil
+          expect(spy_presenter.variants[2][:tinting_id]).to be_nil
+        end
+      end
     end
 
     describe 'v2' do
@@ -342,6 +360,24 @@ RSpec.describe 'santa maria' do
       end
 
       include_examples 'product data'
+
+      context 'tinting id' do
+        let(:endpoint) { 'https://api' }
+
+        it 'contains the tinting_id for tinted products' do
+          spy_presenter = SpyPresenter.new
+          use_case = SantaMaria::UseCase::FetchProducts.new(
+            santa_maria: santa_maria
+          )
+
+          fetch_products 
+          use_case.execute(presenter: spy_presenter)
+
+          expect(spy_presenter.variants[0][:tinting_id]).to be_nil
+          expect(spy_presenter.variants[1][:tinting_id]).to eq('1234567')
+          expect(spy_presenter.variants[2][:tinting_id]).to be_nil
+        end
+      end
     end
   end
 end

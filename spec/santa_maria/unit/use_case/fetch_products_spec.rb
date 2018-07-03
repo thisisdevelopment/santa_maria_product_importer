@@ -47,7 +47,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pattern: '',
               ean: 'ANEAN',
               name: 'Green',
-              version: '2'
+              version: '2',
+              tinting_id: '9998887'
             ),
             double(
               article_number: '182356',
@@ -60,8 +61,9 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pattern: 'weather-stripes',
               ean: '1928172376162',
               name: 'Teal',
-              version: '2'
-            ),
+              version: '2',
+              tinting_id: nil
+            )
           ]
         )
         products << double(
@@ -83,7 +85,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pattern: 'weather-stripes',
               ean: '1928172376162',
               name: 'Orange',
-              version: '3'
+              version: '3',
+              tinting_id: nil
             ),
             double(
               article_number: '192811',
@@ -96,8 +99,9 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pattern: nil,
               ean: '',
               name: 'Red',
-              version: '3'
-            ),
+              version: '3',
+              tinting_id: '7776665'
+            )
           ]
         )
       end
@@ -142,7 +146,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pattern: nil,
               ean: 'ANEAN',
               name: 'Green',
-              version: '2'
+              version: '2',
+              tinting_id: '9998887'
             ).ordered
         )
         expect(presenter).to(
@@ -159,7 +164,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pattern: 'weather-stripes',
               ean: '1928172376162',
               name: 'Teal',
-              version: '2'
+              version: '2',
+              tinting_id: nil
             ).ordered
         )
         expect(presenter).to(
@@ -176,7 +182,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pattern: 'weather-stripes',
               ean: '1928172376162',
               name: 'Orange',
-              version: '3'
+              version: '3',
+              tinting_id: nil
             ).ordered
         )
         expect(presenter).to(
@@ -193,7 +200,8 @@ RSpec.describe SantaMaria::UseCase::FetchProducts do
               pattern: nil,
               ean: nil,
               name: 'Red',
-              version: '3'
+              version: '3',
+              tinting_id: '7776665'
             ).ordered
         )
       end

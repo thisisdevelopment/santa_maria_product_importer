@@ -8,7 +8,8 @@ module SantaMaria
                     :pattern,
                     :ean,
                     :name,
-                    :version
+                    :version,
+                    :tinting_id
 
       attr_writer :valid,
                   :on_sale,

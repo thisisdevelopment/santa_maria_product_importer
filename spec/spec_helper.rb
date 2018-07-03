@@ -46,7 +46,8 @@ RSpec::Matchers.define :a_product_with_variants do |expected_variants|
         variant.pattern == expected_variants[i][:pattern] &&
         variant.ean == expected_variants[i][:ean] &&
         variant.name == expected_variants[i][:name] &&
-        variant.version == expected_variants[i][:version]
+        variant.version == expected_variants[i][:version] &&
+        variant.tinting_id == expected_variants[i][:tinting_id]
     end
 
     !matches.include?(false)

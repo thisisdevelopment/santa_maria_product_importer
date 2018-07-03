@@ -35,7 +35,8 @@ module SantaMaria
               pattern: variant.pattern == '' ? nil : variant.pattern,
               ean: variant.ean == '' ? nil : variant.ean,
               name: variant.name,
-              version: variant.version
+              version: variant.version,
+              tinting_id: variant.tinting_id
             )
           end
         end

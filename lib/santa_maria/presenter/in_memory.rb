@@ -25,7 +25,8 @@ module SantaMaria
       end
 
       def variant(id:, article_number:, price:, valid:, on_sale:, color_id:,
-                  ready_mix:, pack_size:, pattern:, ean:, name:, version:)
+                  ready_mix:, pack_size:, pattern:, ean:, name:, version:,
+                  tinting_id:)
         product = products.detect { |p| p[:id] == id }
         variant = {
           article_number: article_number,
@@ -38,7 +39,8 @@ module SantaMaria
           pattern: pattern,
           ean: ean,
           name: name,
-          version: version
+          version: version,
+          tinting_id: tinting_id
         }
 
         product[:variants] << variant

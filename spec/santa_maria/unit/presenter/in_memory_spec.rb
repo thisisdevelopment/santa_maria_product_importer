@@ -23,7 +23,8 @@ RSpec.describe SantaMaria::Presenter::InMemory do
       pattern: '',
       ean: '9900990099',
       name: 'Red',
-      version: '2'
+      version: '2',
+      tinting_id: '1234567'
     }
   end
 
