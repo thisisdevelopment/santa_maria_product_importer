@@ -145,7 +145,8 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
                       name: 'square-print'
                     }
                   ],
-                  eanCode: '92817271827162'
+                  eanCode: '92817271827162',
+                  genericTintingId: '9998887'
                 },
                 {
                   articleNumber: '1821122',
@@ -231,7 +232,9 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
                 pack_size: '5L',
                 pattern: 'square-print',
                 ean: '92817271827162',
-                name: 'Pure Brilliant Teal'
+                name: 'Pure Brilliant Teal',
+                version: '2',
+                tinting_id: '9998887'
               },
               {
                 article_number: '1821122',
@@ -243,7 +246,9 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
                 pack_size: '5L',
                 pattern: nil,
                 ean: '22222221827162',
-                name: nil
+                name: nil,
+                version: '2',
+                tinting_id: nil
               }
             ]
           },
@@ -260,23 +265,29 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
                 price: '19.20',
                 ready_mix: true,
                 color_id: '1827162',
-                name: 'Pure Brilliant Red'
+                name: 'Pure Brilliant Red',
+                version: '2',
+                tinting_id: nil
               },
               {
                 article_number: '92817271',
                 price: '19.20',
                 ready_mix: true,
                 color_id: '1186982',
-                name: 'NORDIC SAILS 2'
+                name: 'NORDIC SAILS 2',
+                version: '2',
+                tinting_id: nil
               },
               {
                 article_number: '92817271',
                 price: '19.20',
                 ready_mix: true,
                 color_id: '1811241',
-                name: 'Heart Wood'
+                name: 'Heart Wood',
+                version: '2',
+                tinting_id: nil
               },
-              { article_number: '18211221', ready_mix: true }
+              { article_number: '18211221', ready_mix: true, version: '2' }
             ]
           }
         ]

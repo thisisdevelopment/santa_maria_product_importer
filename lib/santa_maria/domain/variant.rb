@@ -7,7 +7,9 @@ module SantaMaria
                     :pack_size,
                     :pattern,
                     :ean,
-                    :name
+                    :name,
+                    :version,
+                    :tinting_id
 
       attr_writer :valid,
                   :on_sale,
