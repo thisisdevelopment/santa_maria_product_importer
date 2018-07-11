@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    santa_maria-product_importer (0.2.0)
+    santa_maria-product_importer (1.0.0)
 
 GEM
   remote: https://rubygems.org/
