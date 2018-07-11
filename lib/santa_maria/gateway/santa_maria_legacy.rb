@@ -1,14 +1,14 @@
 module SantaMaria
   module Gateway
     class SantaMariaLegacy
-      def initialize(endpoint)
+      def initialize(endpoint, site_code, language)
         @endpoint = endpoint
+        @site_code = site_code
+        @language = language
       end
 
       def all_products
-        response = Net::HTTP.get_response(URI("#{endpoint}api/products/eukdlx"))
-
-        result = JSON.parse(response.body)
+        result = get(URI("#{endpoint}api/products/#{site_code}"))
 
         result['products'].each do |p|
           product = SantaMaria::Domain::Product.new(self)
@@ -24,9 +24,7 @@ module SantaMaria
       end
 
       def variants_for(global_id)
-        response = Net::HTTP.get_response(URI("#{endpoint}api/products/eukdlx/#{global_id}"))
-
-        product = JSON.parse(response.body)
+        product = get(URI("#{endpoint}api/products/#{site_code}/#{global_id}"))
 
         product['packages'].map do |package|
           variant = SantaMaria::Domain::Variant.new
@@ -48,7 +46,18 @@ module SantaMaria
 
       private
 
-      attr_reader :endpoint
+      attr_reader :endpoint, :site_code, :language
+
+      def get(uri)
+        request = Net::HTTP::Get.new(uri)
+        request['X-Api-Key'] = ENV['SANTA_MARIA_X_API_TOKEN']
+        request['accept-language'] = language
+        request['accept'] = 'application/json'
+
+        Net::HTTP.start(uri.hostname, 443, use_ssl: true) do |http|
+          JSON.parse(http.request(request).body)
+        end
+      end
     end
   end
 end

@@ -119,6 +119,8 @@ RSpec.describe 'santa maria' do
 
     describe 'legacy' do
       let(:expected_version) { '0' }
+      let(:language) { 'en' }
+      let(:site_code) { 'eukdlx' }
       let(:product_requests) do
         product_1 = {
           packages: [
@@ -165,16 +167,30 @@ RSpec.describe 'santa maria' do
 
         [
           stub_request(:get, "#{endpoint}api/products/eukdlx/192871-19291-39192-109283")
+            .with(
+              headers: {
+                'Accept-Language' => language,
+                'X-Api-Key' => token,
+                'Accept' => 'application/json'
+              }
+            )
             .to_return(
               body: product_1.to_json,
               status: 200
             ),
+
           stub_request(:get, "#{endpoint}api/products/eukdlx/192871-19291-39192-982910")
+            .with(
+              headers: {
+                'Accept-Language' => language,
+                'X-Api-Key' => token,
+                'Accept' => 'application/json'
+              }
+            )
             .to_return(
               body: product_2.to_json,
               status: 200
-            ),
-
+            )
         ]
       end
 
@@ -209,7 +225,7 @@ RSpec.describe 'santa maria' do
       end
 
       let(:santa_maria) do
-        SantaMaria::Gateway::SantaMariaLegacy.new(endpoint)
+        SantaMaria::Gateway::SantaMariaLegacy.new(endpoint, site_code, language)
       end
 
       include_examples 'product data'
