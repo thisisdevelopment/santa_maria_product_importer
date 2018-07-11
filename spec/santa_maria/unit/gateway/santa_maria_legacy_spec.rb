@@ -1,17 +1,27 @@
 RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
   context 'given a product with an id' do
     shared_examples 'santa maria gateway assertions' do
-      let(:gateway) { described_class.new(endpoint) }
+      let(:gateway) { described_class.new(endpoint, site_code, language) }
 
       before do
+        ENV['SANTA_MARIA_X_API_TOKEN'] = token
+
         response = {
           products: products.map { |product| product[:basic] }
         }
 
-        stub_request(:get, "#{endpoint}api/products/eukdlx").to_return(
-          body: response.to_json,
-          status: 200
-        )
+        stub_request(:get, "#{endpoint}api/products/#{site_code}")
+          .with(
+            headers: {
+              'Accept-Language' => language,
+              'Accept' => 'application/json',
+              'X-Api-Key' => token
+            }
+          )
+          .to_return(
+            body: response.to_json,
+            status: 200
+          )
       end
 
       context 'given no products' do
@@ -27,10 +37,18 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
           global_id = product[:basic][:globalId]
           product = product[:basic].merge(product[:extended])
 
-          stub_request(:get, "#{endpoint}api/products/eukdlx/#{global_id}").to_return(
-            body: product.to_json,
-            status: 200
-          )
+          stub_request(:get, "#{endpoint}api/products/#{site_code}/#{global_id}")
+            .with(
+              headers: {
+                'Accept-Language' => language,
+                'Accept' => 'application/json',
+                'X-Api-Key' => token
+              }
+            )
+            .to_return(
+              body: product.to_json,
+              status: 200
+            )
         end
       end
 
@@ -52,7 +70,7 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
         it 'does not request product detail from remote service' do
           gateway.all_products { |_| }
 
-          expect(a_request(:get, %r[#{endpoint}api/products/eukdlx/.+])).not_to have_been_requested
+          expect(a_request(:get, %r[#{endpoint}api/products/#{site_code}/.+])).not_to have_been_requested
         end
       end
 
@@ -80,12 +98,18 @@ RSpec.describe SantaMaria::Gateway::SantaMariaLegacy do
     shared_examples 'santa maria gateway' do
       context do
         let(:endpoint) { 'https://api/' }
-
+        let(:language) { 'en' }
+        let(:site_code) { 'eukdlx' }
+        let(:token) { 'super secret' }
+        
         include_examples 'santa maria gateway assertions'
       end
 
       context do
         let(:endpoint) { 'https://abd/' }
+        let(:language) { 'fr' }
+        let(:site_code) { 'efrdxv' }
+        let(:token) { 'token' }
 
         include_examples 'santa maria gateway assertions'
       end
