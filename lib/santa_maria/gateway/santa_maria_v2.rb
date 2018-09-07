@@ -93,7 +93,7 @@ module SantaMaria
         variant.ean = sku['eanCode']
         variant.valid = sku['validEcomData'] == 'true' unless sku['validEcomData'].nil?
         variant.on_sale = sku['readyForSale'] == 'true' unless sku['readyForSale'].nil?
-        variant.ready_mix = !sku['tintedOrReadyMix'].eql?('Tinted')
+        variant.ready_mix = !['Tinted', 'Basepaint'].include?(sku['tintedOrReadyMix')
         variant.version = '2'
         variant.tinting_id = sku.dig('genericTintingId')
         variant
