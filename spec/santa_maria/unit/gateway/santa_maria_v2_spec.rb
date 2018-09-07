@@ -149,6 +149,31 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
                   genericTintingId: '9998887'
                 },
                 {
+                  articleNumber: '9281727',
+                  price: '19.29',
+                  validEcomData: 'true',
+                  readyForSale: 'true',
+                  colorIds: [
+                    {
+                      colorCollectionColors: [
+                        {
+                          colorCollectionColorID: '1827162',
+                          colorTranslation: 'Pure Brilliant Teal'
+                        }
+                      ]
+                    }
+                  ],
+                  tintedOrReadyMix: 'Basepaint',
+                  friendlyPackSizeTranslation: '5L',
+                  pattern: [
+                    {
+                      name: 'square-print'
+                    }
+                  ],
+                  eanCode: '92817271827162',
+                  genericTintingId: '9998887'
+                },
+                {
                   articleNumber: '1821122',
                   price: '21.39',
                   validEcomData: 'true',
@@ -222,6 +247,20 @@ RSpec.describe SantaMaria::Gateway::SantaMariaV2 do
             description: 'Weathershield is super tough',
             image_url: nil,
             variants: [
+              {
+                article_number: '9281727',
+                price: '19.29',
+                valid: true,
+                on_sale: true,
+                color_id: '1827162',
+                ready_mix: false,
+                pack_size: '5L',
+                pattern: 'square-print',
+                ean: '92817271827162',
+                name: 'Pure Brilliant Teal',
+                version: '2',
+                tinting_id: '9998887'
+              },
               {
                 article_number: '9281727',
                 price: '19.29',
