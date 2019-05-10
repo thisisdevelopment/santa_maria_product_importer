@@ -4,10 +4,11 @@ require 'net/http'
 module SantaMaria
   module Gateway
     class SantaMariaV2
-      def initialize(endpoint, domaincode, language)
+      def initialize(endpoint, domaincode, language, version = nil)
         @endpoint = endpoint
         @domaincode = domaincode
         @language = language
+        @version = version
       end
 
       def all_products
@@ -58,7 +59,7 @@ module SantaMaria
 
       private
 
-      attr_reader :endpoint, :domaincode, :language
+      attr_reader :endpoint, :domaincode, :language, :version
 
       def get(uri)
         request = Net::HTTP::Get.new(uri)
@@ -67,6 +68,7 @@ module SantaMaria
         request['content-type'] = 'application/json'
         request['channel'] = 'flourishweb'
         request['domaincode'] = domaincode
+        request['version'] = version unless version.nil?
 
         Net::HTTP.start(uri.hostname, 443, use_ssl: true) do |http|
           JSON.parse(http.request(request).body)
