@@ -62,16 +62,41 @@ module SantaMaria
       attr_reader :endpoint, :domaincode, :language, :version
 
       def get(uri)
-        request = Net::HTTP::Get.new(uri)
-        request['X-Api-Key'] = ENV['SANTA_MARIA_X_API_TOKEN']
-        request['accept-language'] = language
-        request['content-type'] = 'application/json'
-        request['channel'] = 'flourishweb'
-        request['domaincode'] = domaincode
-        request['version'] = version unless version.nil?
+        http = nil
+        request = nil
+        tries = 0
 
-        Net::HTTP.start(uri.hostname, 443, use_ssl: true) do |http|
+        begin
+          unless request
+            request = Net::HTTP::Get.new(uri)
+            request['X-Api-Key'] = ENV['SANTA_MARIA_X_API_TOKEN']
+            request['accept-language'] = language
+            request['content-type'] = 'application/json'
+            request['channel'] = 'flourishweb'
+            request['domaincode'] = domaincode
+            request['version'] = version unless version.nil?
+          end
+
+          unless http
+            # puts "Opening connection"
+            http = Net::HTTP.start(uri.host, 443, use_ssl: true)
+          end
+
           JSON.parse(http.request(request).body)
+        rescue StandardError => e
+          if (tries += 1) <= 10
+            # puts "Error getting data from Santa Maria: #{e.to_s}"
+            # puts "retrying in #{tries} second(s)..."
+            sleep(tries)
+            retry
+          else
+            raise
+          end
+        ensure
+          if http
+            # puts "Closing connection"
+            http.finish
+          end
         end
       end
 
