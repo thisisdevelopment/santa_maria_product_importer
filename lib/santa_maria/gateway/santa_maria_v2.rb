@@ -82,7 +82,13 @@ module SantaMaria
             http = Net::HTTP.start(uri.host, 443, use_ssl: true)
           end
 
-          JSON.parse(http.request(request).body)
+          response = http.request(request)
+          result = JSON.parse(response.body)
+
+          raise result['error'] unless result['error'].nil?
+
+          return result
+
         rescue StandardError => e
           if (tries += 1) <= 10
             # puts "Error getting data from Santa Maria: #{e.to_s}"
