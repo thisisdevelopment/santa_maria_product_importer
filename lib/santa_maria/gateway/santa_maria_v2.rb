@@ -85,7 +85,7 @@ module SantaMaria
           response = http.request(request)
           result = JSON.parse(response.body)
 
-          raise result['error'] unless result['error'].nil?
+          raise 'API forwards unknown exception' if result['type'] === 'unknown-exception'
 
           return result
 
