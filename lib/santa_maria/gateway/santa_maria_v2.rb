@@ -110,6 +110,7 @@ module SantaMaria
         product = SantaMaria::Domain::Product.new(self)
         product.global_id = product_data['globalId']
         product.type = product_data['productType']
+        product.defaultType = product_data['defaultProductType']
         product.name = product_data['name']
         product.uri_name = product_data['uri']
         product.description = product_data['localSlogan']

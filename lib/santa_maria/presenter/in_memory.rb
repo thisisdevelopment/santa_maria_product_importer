@@ -8,10 +8,11 @@ module SantaMaria
         @colors = []
       end
 
-      def product(id:, type:, name:, uri_name:, description:, image_url:)
+      def product(id:, type:, defaultType:, name:, uri_name:, description:, image_url:)
         product = {
           id: id,
           type: type,
+          defaultType: defaultType,
           name: name,
           uri_name: uri_name,
           description: description,
