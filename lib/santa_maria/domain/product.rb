@@ -1,7 +1,7 @@
 module SantaMaria
   module Domain
     class Product
-      attr_accessor :global_id, :type, :name, :uri_name, :description, :image_url
+      attr_accessor :global_id, :type, :defaultType, :name, :uri_name, :description, :image_url
 
       def initialize(variant_accessor)
         @variant_accessor = variant_accessor

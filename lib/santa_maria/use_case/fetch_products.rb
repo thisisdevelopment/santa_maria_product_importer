@@ -12,6 +12,7 @@ module SantaMaria
           presenter.product(
             id: product.global_id,
             type: product.type,
+            defaultType: product.defaultType,
             name: product.name,
             uri_name: product.uri_name,
             description: product.description,
