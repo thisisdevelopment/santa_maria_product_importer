@@ -49,10 +49,17 @@ module SantaMaria
         variant
       end
 
-      def color(id:, rgb:)
+      def color(collection_color_id:, collection_id:, global_color_id:, rgb:,
+                color_number:, default_color_number:, color_name:, default_color_name:)
         colors << {
-          id: id,
-          rgb: rgb
+          collection_color_id: collection_color_id,
+          collection_id: collection_id,
+          global_color_id: global_color_id,
+          rgb: rgb,
+          color_number: color_number,
+          default_color_number: default_color_number,
+          color_name: color_name,
+          default_color_name: default_color_name
         }
       end
     end
