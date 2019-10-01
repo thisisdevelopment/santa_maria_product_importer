@@ -52,7 +52,16 @@ module SantaMaria
         response_colors = get(URI("#{endpoint}api/v2/colors"))['colors']
         response_colors.map do |global_color|
           global_color['colorCollections'].map do |color_collection|
-            new_color(global_color['rgb'], color_collection['colorCollectionColorId'])
+            color = SantaMaria::Domain::Color.new
+            color.collection_color_id = color_collection['colorCollectionColorId']
+            color.collection_id = color_collection['colorCollectionId']
+            color.global_color_id = global_color['colorId']
+            color.color_number = color_collection['colorNumber']
+            color.default_color_number = color_collection['defaultColorNumber']
+            color.color_name = color_collection['colorNumber']
+            color.default_color_name = color_collection['defaultColorNumber']
+            color.rgb = global_color['rgb']
+            color
           end
         end.flatten
       end
@@ -131,13 +140,6 @@ module SantaMaria
         variant.version = '2'
         variant.tinting_id = sku.dig('genericTintingId')
         variant
-      end
-
-      def new_color(rgb, color_collection_color_id)
-        color = SantaMaria::Domain::Color.new
-        color.color_id = color_collection_color_id
-        color.rgb = rgb
-        color
       end
     end
   end
