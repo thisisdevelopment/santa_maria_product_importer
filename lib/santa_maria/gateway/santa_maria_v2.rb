@@ -18,7 +18,7 @@ module SantaMaria
         result = get(uri)
 
         result['products'].each do |product|
-          yield new_product(product)
+          yield new_product(product) unless product['deleteFlag'] == true
         end
       end
 
